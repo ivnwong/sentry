@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Laboratory Quality Assurance System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .input-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+        }
+
+        .form-section h3 {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e1e5e9;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .paired-values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            align-items: end;
+        }
+
+        .paired-values label {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .paired-values .label-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .analyte-pair {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .analyte-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+
+        input, select {
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-clear {
+            background: #718096;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-clear:hover {
+            background: #4a5568;
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .analyte-result {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid;
+            font-size: 0.9rem;
+        }
+
+        .analyte-result.low-risk {
+            background-color: #f0fff4;
+            border-left-color: #38a169;
+        }
+
+        .analyte-result.medium-risk {
+            background-color: #fffbeb;
+            border-left-color: #ed8936;
+        }
+
+        .analyte-result.high-risk {
+            background-color: #fed7d7;
+            border-left-color: #e53e3e;
+        }
+
+        .risk-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .risk-low { background-color: #38a169; }
+        .risk-medium { background-color: #ed8936; }
+        .risk-high { background-color: #e53e3e; }
+
+        .change-indicator {
+            font-weight: 600;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .change-positive {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .change-negative {
+            background-color: #bee3f8;
+            color: #2b6cb0;
+        }
+
+        .change-stable {
+            background-color: #f0fff4;
+            color: #38a169;
+        }
+
+        .interpretation-panel {
+            background-color: #f7fafc;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results-header {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
+            font-weight: 600;
+            padding: 1rem;
+            background-color: #edf2f7;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .analyte-result, .results-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .analyte-result > div {
+                padding: 0.25rem 0;
+                border-bottom: 1px solid #e1e5e9;
+            }
+            
+            .analyte-result > div:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .paired-values {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Intelligent Laboratory Quality Assurance System</h1>
+            <p>Advanced multivariate analysis for laboratory error detection and quality control</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Panel -->
+            <div class="input-panel">
+                <h2>Patient Data & Laboratory Values</h2>
+                
+                <form id="qualityAssuranceForm">
+                    <!-- Patient Demographics -->
+                    <div class="form-section">
+                        <h3>Patient Demographics & Sample Info</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sex">Sex</label>
+                                <select id="sex" name="sex" required>
+                                    <option value="">Select sex</option>
+                                    <option value="male" selected>Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age (years)</label>
+                                <input type="number" id="age" name="age" min="0" max="120" value="45" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeBetweenDraw">Time Between Blood Draws (hours)</label>
+                                <input type="number" id="timeBetweenDraw" name="timeBetweenDraw" min="0" step="0.1" value="24.0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Renal Function Tests -->
+                    <div class="form-section">
+                        <h3>Renal Function Tests</h3>
+                        
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Sodium (mmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="sodium_previous">Previous Value</label>
+                                    <input type="number" id="sodium_previous" name="sodium_previous" step="0.1" value="138">
+                                </div>
+                                <div class="label-group">
+                                    <label for="sodium_current">Current Value</label>
+                                    <input type="number" id="sodium_current" name="sodium_current" step="0.1" value="140" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Potassium (mmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="potassium_previous">Previous Value</label>
+                                    <input type="number" id="potassium_previous" name="potassium_previous" step="0.1" value="4.0">
+                                </div>
+                                <div class="label-group">
+                                    <label for="potassium_current">Current Value</label>
+                                    <input type="number" id="potassium_current" name="potassium_current" step="0.1" value="4.2" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Creatinine (μmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="creatinine_previous">Previous Value</label>
+                                    <input type="number" id="creatinine_previous" name="creatinine_previous" step="0.1" value="88">
+                                </div>
+                                <div class="label-group">
+                                    <label for="creatinine_current">Current Value</label>
+                                    <input type="number" id="creatinine_current" name="creatinine_current" step="0.1" value="95" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Urea (mmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="urea_previous">Previous Value</label>
+                                    <input type="number" id="urea_previous" name="urea_previous" step="0.1" value="6.2">
+                                </div>
+                                <div class="label-group">
+                                    <label for="urea_current">Current Value</label>
+                                    <input type="number" id="urea_current" name="urea_current" step="0.1" value="6.8" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Liver Function Tests -->
+                    <div class="form-section">
+                        <h3>Liver Function Tests</h3>
+                        
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Total Protein (g/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="totalProtein_previous">Previous Value</label>
+                                    <input type="number" id="totalProtein_previous" name="totalProtein_previous" step="0.1" value="68">
+                                </div>
+                                <div class="label-group">
+                                    <label for="totalProtein_current">Current Value</label>
+                                    <input type="number" id="totalProtein_current" name="totalProtein_current" step="0.1" value="72" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Albumin (g/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="albumin_previous">Previous Value</label>
+                                    <input type="number" id="albumin_previous" name="albumin_previous" step="0.1" value="40">
+                                </div>
+                                <div class="label-group">
+                                    <label for="albumin_current">Current Value</label>
+                                    <input type="number" id="albumin_current" name="albumin_current" step="0.1" value="42" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Alkaline Phosphatase (U/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="alkalinePhosphatase_previous">Previous Value</label>
+                                    <input type="number" id="alkalinePhosphatase_previous" name="alkalinePhosphatase_previous" step="0.1" value="78">
+                                </div>
+                                <div class="label-group">
+                                    <label for="alkalinePhosphatase_current">Current Value</label>
+                                    <input type="number" id="alkalinePhosphatase_current" name="alkalinePhosphatase_current" step="0.1" value="85" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Alanine Transaminase (U/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="alanineTransaminase_previous">Previous Value</label>
+                                    <input type="number" id="alanineTransaminase_previous" name="alanineTransaminase_previous" step="0.1" value="25">
+                                </div>
+                                <div class="label-group">
+                                    <label for="alanineTransaminase_current">Current Value</label>
+                                    <input type="number" id="alanineTransaminase_current" name="alanineTransaminase_current" step="0.1" value="28" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Total Bilirubin (μmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="totalBilirubin_previous">Previous Value</label>
+                                    <input type="number" id="totalBilirubin_previous" name="totalBilirubin_previous" step="0.1" value="13">
+                                </div>
+                                <div class="label-group">
+                                    <label for="totalBilirubin_current">Current Value</label>
+                                    <input type="number" id="totalBilirubin_current" name="totalBilirubin_current" step="0.1" value="15" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Analyze Laboratory Values</button>
+                    <button type="button" class="btn-clear" onclick="clearForm()">Clear All Fields</button>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <h2>Quality Assurance Results</h2>
+                
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <p>Analyzing laboratory values...</p>
+                </div>
+
+                <div id="resultsContainer" style="display: none;">
+                    <div class="results-header">
+                        <div>Analyte</div>
+                        <div>Previous</div>
+                        <div>Current</div>
+                        <div>Change</div>
+                        <div>True Value</div>
+                        <div>Error Risk</div>
+                    </div>
+                    
+                    <div class="results-grid" id="resultsGrid">
+                        <!-- Results will be populated here -->
+                    </div>
+
+                    <div class="interpretation-panel">
+                        <h3>Interpretation</h3>
+                        <div id="interpretationText">
+                            <!-- Interpretation will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="noResults" style="display: block; text-align: center; padding: 2rem; color: #718096;">
+                    <p>Click "Analyze Laboratory Values" to see the demo results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clear form function for demo purposes
+        function clearForm() {
+            document.getElementById('qualityAssuranceForm').reset();
+            document.getElementById('sex').value = '';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('noResults').style.display = 'block';
+        }
+
+        // Form submission handler
+        document.getElementById('qualityAssuranceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('noResults').style.display = 'none';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                // **BACKEND CONNECTION POINT 1**
+                // This is where you would make the API call to your backend
+                const response = await fetch('/api/analyze-quality', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Analysis failed');
+                }
+                
+                const results = await response.json();
+                displayResults(results);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                // For demo purposes, show mock results
+                setTimeout(() => {
+                    displayMockResults();
+                }, 2000);
+            }
+        });
+
+        function displayResults(results) {
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const resultsGrid = document.getElementById('resultsGrid');
+            resultsGrid.innerHTML = '';
+            
+            // **BACKEND CONNECTION POINT 2**
+            // Expected response format from backend - see documentation below
+            
+            results.analytes.forEach(analyte => {
+                const analyteElement = createAnalyteElement(analyte);
+                resultsGrid.appendChild(analyteElement);
+            });
+            
+            document.getElementById('interpretationText').innerHTML = results.interpretation;
+        }
+
+        function createAnalyteElement(analyte) {
+            const div = document.createElement('div');
+            div.className = `analyte-result ${analyte.riskLevel}-risk`;
+            
+            const riskClass = analyte.errorProbability > 0.7 ? 'high' : 
+                             analyte.errorProbability > 0.3 ? 'medium' : 'low';
+            
+            // Calculate change indicator - handle null/undefined values
+            let changeText = 'N/A';
+            let changeClass = 'stable';
+            
+            if (analyte.previousValue !== null && analyte.previousValue !== undefined && 
+                analyte.currentValue !== null && analyte.currentValue !== undefined) {
+                const changeValue = analyte.currentValue - analyte.previousValue;
+                const changePercent = analyte.previousValue ? ((changeValue / analyte.previousValue) * 100) : 0;
+                changeClass = Math.abs(changePercent) < 5 ? 'stable' : 
+                             changePercent > 0 ? 'positive' : 'negative';
+                changeText = Math.abs(changePercent) < 5 ? 'Stable' : 
+                            `${changePercent > 0 ? '+' : ''}${changePercent.toFixed(1)}%`;
+            }
+            
+            div.innerHTML = `
+                <div>
+                    <span class="risk-indicator risk-${riskClass}"></span>
+                    ${analyte.name}
+                </div>
+                <div>${analyte.previousValue !== null && analyte.previousValue !== undefined ? analyte.previousValue : 'N/A'}</div>
+                <div>${analyte.currentValue !== null && analyte.currentValue !== undefined ? analyte.currentValue : 'N/A'}</div>
+                <div><span class="change-indicator change-${changeClass}">${changeText}</span></div>
+                <div>${analyte.trueValue !== null && analyte.trueValue !== undefined ? analyte.trueValue : 'N/A'}</div>
+                <div>${(analyte.errorProbability * 100).toFixed(1)}%</div>
+            `;
+            
+            return div;
+        }
+
+        // Mock results for demonstration using the pre-filled values
+        function displayMockResults() {
+            const mockResults = {
+                analytes: [
+                    { 
+                        name: "Sodium", 
+                        previousValue: 138, 
+                        currentValue: 140, 
+                        trueValue: 139, 
+                        errorProbability: 0.15, 
+                        riskLevel: "low"
+                    },
+                    { 
+                        name: "Potassium", 
+                        previousValue: 4.0, 
+                        currentValue: 4.2, 
+                        trueValue: 4.1, 
+                        errorProbability: 0.08, 
+                        riskLevel: "low"
+                    },
+                    { 
+                        name: "Creatinine", 
+                        previousValue: 88, 
+                        currentValue: 95, 
+                        trueValue: 92, 
+                        errorProbability: 0.45, 
+                        riskLevel: "medium"
+                    },
+                    { 
+                        name: "Urea", 
+                        previousValue: 6.2, 
+                        currentValue: 6.8, 
+                        trueValue: 6.5, 
+                        errorProbability: 0.25, 
+                        riskLevel: "low"
+                    },
+                    { 
+                        name: "Total Protein", 
+                        previousValue: 68, 
+                        currentValue: 72, 
+                        trueValue: 70, 
+                        errorProbability: 0.75, 
+                        riskLevel: "high"
+                    },
+                    { 
+                        name: "Albumin", 
+                        previousValue: 40, 
+                        currentValue: 42, 
+                        trueValue: 41, 
+                        errorProbability: 0.12, 
+                        riskLevel: "low"
+                    },
+                    { 
+                        name: "ALP", 
+                        previousValue: 78, 
+                        currentValue: 85, 
+                        trueValue: 82, 
+                        errorProbability: 0.35, 
+                        riskLevel: "medium"
+                    },
+                    { 
+                        name: "ALT", 
+                        previousValue: 25, 
+                        currentValue: 28, 
+                        trueValue: 27, 
+                        errorProbability: 0.18, 
+                        riskLevel: "low"
+                    },
+                    { 
+                        name: "Total Bilirubin", 
+                        previousValue: 13, 
+                        currentValue: 15, 
+                        trueValue: 14, 
+                        errorProbability: 0.22, 
+                        riskLevel: "low"
+                    },                    
+                    { 
+                        name: "Dilution", 
+                        previousValue: null, 
+                        currentValue: null, 
+                        trueValue: null, 
+                        errorProbability: 0.85, 
+                        riskLevel: "high"
+                    }
+                ],
+                interpretation: `
+                    <p><strong>Quality Assurance Summary for 45-year-old Male:</strong></p>
+                    <ul>
+                        <li><strong>High Risk:</strong> Total Protein shows elevated error probability (75%) with 5.9% increase from previous value - recommend immediate repeat testing</li>
+                        <li><strong>High Risk:</strong> Dilution factor shows 85% error probability - sample integrity compromised, recommend immediate recollection and reanalysis</li>
+                        <li><strong>Medium Risk:</strong> Creatinine (8.0% increase) and ALP (9.0% increase) show moderate error probabilities - monitor closely and consider clinical correlation</li>
+                        <li><strong>Low Risk:</strong> Remaining analytes show acceptable quality metrics with expected physiological variation</li>
+                    </ul>
+                    <p><strong>Temporal Analysis:</strong> 24-hour interval between draws is optimal for change detection. Several analytes show upward trends suggesting potential analytical interference or early pathological changes.</p>
+                    <p><strong>Sample Quality Assessment:</strong> Dilution measurement indicates potential sample integrity issues - may affect all other analyte results.</p>
+                    <p><strong>Multivariate Assessment:</strong> Concurrent increases in protein markers and renal function tests may indicate systematic analytical issues or emerging clinical condition requiring attention.</p>
+                    <p><strong>Recommendations:</strong> 
+                        1. <span style="color: #e53e3e; font-weight: bold;">Immediate sample recollection due to dilution issues</span> (high error probability)
+                        2. <span style="color: #e53e3e; font-weight: bold;">Immediate reanalysis of Total Protein</span> (high error probability)
+                        3. Review sample handling and storage procedures
+                        4. Consider clinical correlation for renal function changes
+                        5. Monitor patient for underlying pathological progression
+                        6. Implement enhanced quality control for protein assays and sample integrity checks
+                    </p>
+                `
+            };
+            
+            displayResults(mockResults);
+        }
+    </script>
+</body>
+</html>
