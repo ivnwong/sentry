@@ -524,7 +524,7 @@
         }
 
         // Form submission handler
-        document.getElementById('qualityAssuranceForm').addEventListener('submit', async function(e) {
+        /*document.getElementById('qualityAssuranceForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Show loading indicator
@@ -561,8 +561,49 @@
                     displayMockResults();
                 }, 2000);
             }
-        });
+        });*/
 
+        // Form submission handler
+        document.getElementById('qualityAssuranceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            document.getElementById('loadingIndicator').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('noResults').style.display = 'none';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Get token from URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            try {
+                const response = await fetch('/api/analyze-quality', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Analysis failed');
+                }
+                
+                const results = await response.json();
+                displayResults(results);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                // Show error message
+                document.getElementById('loadingIndicator').style.display = 'none';
+                alert('Analysis failed. Please try again.');
+            }
+        });
         function displayResults(results) {
             document.getElementById('loadingIndicator').style.display = 'none';
             document.getElementById('resultsContainer').style.display = 'block';
