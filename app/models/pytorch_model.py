@@ -62,10 +62,11 @@ class LabQAModel:
         """Load the PyTorch model and scaler"""
         try:
             # Load model
-            model_path = "model_files/encoder_model.pth"
+            model_path = "model_files/model_1_clipnaK_portion_to_85_dil.pt"
             if os.path.exists(model_path):
                 self.model = Encoder()
-                self.model.load_state_dict(torch.load(model_path, map_location=self.device))
+                self.model = torch.load(model_path, weights_only=False)
+                # self.model.load_state_dict(torch.load(model_path, map_location=self.device))
                 self.model.eval()
                 self.model.to(self.device)
             
@@ -222,7 +223,7 @@ class LabQAModel:
         # Process results
         return self._process_prediction(prediction, patient_data, df)
     
-    def _process_prediction(self, prediction: np.ndarray, patient_data, original_df: pd.DataFrame) -> Dict[str, Any]:
+    def _process_prediction_(self, prediction: np.ndarray, patient_data, original_df: pd.DataFrame) -> Dict[str, Any]:
         """Process model prediction into readable results"""
         # Extract predicted values and error probabilities
         predicted_values = prediction[0, :9]  # First 9 values are true values
@@ -308,6 +309,133 @@ class LabQAModel:
         
         return results
     
+
+    def _process_prediction(self, prediction: np.ndarray, patient_data, original_df: pd.DataFrame) -> Dict[str, Any]:
+        """Process model prediction into readable results"""
+        # Extract predicted values and error probabilities
+        predicted_values_scaled = prediction[0, :9]  # First 9 values are scaled true values
+        error_probabilities = prediction[0, 9:]  # Last 10 values are error probabilities
+        
+        # Reverse the scaling on predicted values
+        predicted_values = self._inverse_transform_predictions(predicted_values_scaled, original_df)
+        
+        # Analyte mapping
+        field_mapping = {
+            'albumin': ('ALB', 0),
+            'alkalinePhosphatase': ('ALP', 1), 
+            'alanineTransaminase': ('ALT', 2),
+            'creatinine': ('CR', 3),
+            'potassium': ('K', 4),
+            'sodium': ('Sodium', 5),
+            'totalBilirubin': ('TB', 6),
+            'totalProtein': ('TP', 7),
+            'urea': ('U', 8)
+        }
+        
+        results = {
+            "analytes": [],
+            "interpretation": ""
+        }
+        
+        high_risk_analytes = []
+        medium_risk_analytes = []
+        
+        for field_name, (analyte, idx) in field_mapping.items():
+            current_value = getattr(patient_data, f"{field_name}_current")
+            previous_value = getattr(patient_data, f"{field_name}_previous", current_value)
+            
+            # Get true value from prediction (now properly unscaled)
+            true_value = float(predicted_values[idx])
+            
+            # Get error probability
+            error_prob = float(error_probabilities[idx])
+            
+            # Determine risk level
+            if error_prob > 0.7:
+                risk_level = "high"
+                high_risk_analytes.append((analyte, error_prob * 100))
+            elif error_prob > 0.3:
+                risk_level = "medium" 
+                medium_risk_analytes.append((analyte, error_prob * 100))
+            else:
+                risk_level = "low"
+            
+            analyte_result = {
+                "name": analyte,
+                "previousValue": previous_value,
+                "currentValue": current_value,
+                "trueValue": round(true_value, 2),
+                "errorProbability": error_prob,
+                "riskLevel": risk_level
+            }
+            
+            results["analytes"].append(analyte_result)
+        
+        # Dilution value
+        error_prob = prediction[0, -1]
+        if error_prob > 0.7:
+            risk_level = "high"
+            high_risk_analytes.append(('Dilution', error_prob * 100))
+        elif error_prob > 0.3:
+            risk_level = "medium" 
+            medium_risk_analytes.append(('Dilution', error_prob * 100))
+        else:
+            risk_level = "low"
+        
+        dilution_result = {
+            "name": 'Dilution',
+            "previousValue": np.nan,
+            "currentValue": np.nan,
+            "trueValue": np.nan,
+            "errorProbability": prediction[0, -1] * 100,
+            "riskLevel": risk_level 
+        }
+        results["analytes"].append(dilution_result)
+        
+        # Generate interpretation
+        results["interpretation"] = self._generate_interpretation(
+            patient_data, high_risk_analytes, medium_risk_analytes
+        )
+        
+        return results    
+    
+
+    def _inverse_transform_predictions(self, predicted_values_scaled: np.ndarray, original_df: pd.DataFrame) -> np.ndarray:
+        """Inverse transform the predicted values back to original scale"""
+        
+        # Define the column order that the scaler expects
+        scaler_x_columns = [
+            'Age_y', 'ALB_y', 'ALP_y', 'ALT_y', 'CR_y', 'K_y', 'Sodium_y', 
+            'TB_y', 'TP_y', 'U_y', 'del_time_hour', 
+            'H_x', 'H_y',
+            'ALB_x', 'ALP_x', 'ALT_x', 'CR_x', 'K_x', 'Sodium_x', 'TB_x', 'TP_x', 'U_x',
+            'ALB_noise_data', 'ALP_noise_data', 'ALT_noise_data', 'CR_noise_data',
+            'K_noise_data', 'Sodium_noise_data', 'TB_noise_data', 'TP_noise_data', 
+            'U_noise_data'
+        ] + [f'{analyte}_percent' for analyte in self.analytes] + [f'{analyte}_diff' for analyte in self.analytes]
+        
+        # Find indices of the analyte _noise_data columns in the scaler
+        analyte_noise_data_columns = ['ALB_noise_data', 'ALP_noise_data', 'ALT_noise_data', 'CR_noise_data', 
+                                    'K_noise_data', 'Sodium_noise_data', 'TB_noise_data', 'TP_noise_data', 'U_noise_data']
+        analyte_indices = [scaler_x_columns.index(col) for col in analyte_noise_data_columns]
+        
+        # Create a dummy array with the same shape as the scaler expects
+        # We'll use the scaled values from the original data preparation
+        dummy_scaled = original_df.copy()
+        
+        # Replace the analyte _noise_data values with our predictions
+        for i, pred_idx in enumerate(analyte_indices):
+            dummy_scaled[0, pred_idx] = predicted_values_scaled[i]
+        
+        # Inverse transform
+        dummy_unscaled = self.scaler.inverse_transform(dummy_scaled[scaler_x_columns])
+        
+        # Extract the unscaled analyte values
+        predicted_values_unscaled = dummy_unscaled[0, analyte_indices]
+        
+        return predicted_values_unscaled
+
+
     def _generate_interpretation(self, patient_data, high_risk_analytes: List, medium_risk_analytes: List) -> str:
         """Generate clinical interpretation"""
         interpretation = f"""
