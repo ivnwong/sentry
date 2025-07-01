@@ -356,10 +356,10 @@ class LabQAModel:
             error_prob = float(error_probabilities[idx])
             
             # Determine risk level
-            if error_prob > 0.7:
+            if error_prob > 0.8:
                 risk_level = "high"
                 high_risk_analytes.append((analyte, error_prob * 100))
-            elif error_prob > 0.3:
+            elif error_prob > 0.5:
                 risk_level = "medium" 
                 medium_risk_analytes.append((analyte, error_prob * 100))
             else:
@@ -379,10 +379,10 @@ class LabQAModel:
 
         # Dilution value
         error_prob = prediction[0, -1]
-        if error_prob > 0.7:
+        if error_prob > 0.8:
             risk_level = "high"
             high_risk_analytes.append(('Dilution', error_prob * 100))
-        elif error_prob > 0.3:
+        elif error_prob > 0.5:
             risk_level = "medium" 
             medium_risk_analytes.append(('Dilution', error_prob * 100))
         else:
