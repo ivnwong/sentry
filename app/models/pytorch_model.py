@@ -86,7 +86,7 @@ class LabQAModel:
     
     def is_loaded(self) -> bool:
         """Check if model is loaded"""
-        print(self.model, self.scaler)
+        # print(self.model, self.scaler)
         return self.model is not None and self.scaler is not None
     
     def _prepare_input_data(self, patient_data) -> pd.DataFrame:
@@ -213,6 +213,7 @@ class LabQAModel:
         """Make prediction using the model"""
         if not self.is_loaded():
             raise Exception("Model not loaded")
+        print(patient_data)
         
         # Prepare input data
         df = self._prepare_input_data(patient_data)
@@ -223,7 +224,7 @@ class LabQAModel:
         with torch.no_grad():
             prediction = self.model(input_tensor)
             prediction = prediction.cpu().numpy()
-        
+        print(prediction)
         # Process results
         return self._process_prediction(prediction, patient_data, df)
     
