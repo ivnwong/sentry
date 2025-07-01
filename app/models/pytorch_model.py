@@ -299,9 +299,9 @@ class LabQAModel:
             risk_level = "low"
         dilution_result = {
             "name": 'Dilution',
-            "previousValue": None,
-            "currentValue": None,
-            "trueValue": None,
+            "previousValue": 0.0,
+            "currentValue": 0.0,
+            "trueValue": 0.0,
             "errorProbability": prediction[0, -1]*100,
             "riskLevel": risk_level 
         }
@@ -312,7 +312,7 @@ class LabQAModel:
         results["interpretation"] = self._generate_interpretation(
             patient_data, high_risk_analytes, medium_risk_analytes
         )
-        
+        print(results)
         return results
     
 
