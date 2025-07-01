@@ -393,7 +393,7 @@ class LabQAModel:
             "previousValue": None,
             "currentValue": None,
             "trueValue": None,
-            "errorProbability": prediction[0, -1] * 100,
+            "errorProbability": prediction[0, -1],
             "riskLevel": risk_level 
         }
         results["analytes"].append(dilution_result)
