@@ -108,7 +108,7 @@ class LabQAModel:
         # data['H_x'] = 1 if patient_data.sex.lower() == 'male' else 0
         # data['H_y'] = data['H_x']  # Assuming same patient
         data['Sex'] = 1 if patient_data.sex.lower() == 'female' else 0
-        data['H_x'], data['H_y'] == 0
+        data['H_x'], data['H_y'] = 0,0
         data['del_time_hour'] = patient_data.timeBetweenDraw
         
         # Process analyte values
