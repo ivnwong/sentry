@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 
 from app.auth.token_auth import TokenAuth
-from app.models.pytorch_model import LabQAModel
+from app.models.pytorch_model import LabQAModel, Encoder
 from app.utils.logger import RequestLogger
 
 app = FastAPI(title="Laboratory Quality Assurance System", version="1.0.0")
