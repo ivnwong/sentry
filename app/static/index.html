@@ -581,11 +581,11 @@
             const token = urlParams.get('token');
             
             try {
-                const response = await fetch('/api/analyze-quality', {
+                const response = await fetch('/api/analyze-quality?token=${token}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                        //'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(data)
                 });
