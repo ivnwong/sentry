@@ -69,12 +69,15 @@ class LabQAModel:
                 # self.model.load_state_dict(torch.load(model_path, map_location=self.device))
                 self.model.eval()
                 self.model.to(self.device)
+                print('DL model loaded')
             
             # Load scaler
             scaler_path = "model_files/scaler.pkl"
             if os.path.exists(scaler_path):
                 with open(scaler_path, 'rb') as f:
                     self.scaler = pickle.load(f)
+                    print('scaler model loaded')
+
             
             print(f"Model loaded successfully on {self.device}")
             
@@ -83,6 +86,7 @@ class LabQAModel:
     
     def is_loaded(self) -> bool:
         """Check if model is loaded"""
+        print(self.model, self.scaler)
         return self.model is not None and self.scaler is not None
     
     def _prepare_input_data(self, patient_data) -> pd.DataFrame:
