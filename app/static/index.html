@@ -740,7 +740,7 @@
                 const changeValue = analyte.currentValue - analyte.previousValue;
                 const changePercent = analyte.previousValue ? ((changeValue / analyte.previousValue) * 100) : 0;
                 changeClass = changePercent > 0 ? 'positive' : 'negative';
-                changeText = `${changePercent > 0 ? '+' : '-'}${changePercent.toFixed(1)}%`;
+                changeText = `${changePercent > 0 ? '+' : ''}${changePercent.toFixed(1)}%`;
             }
             
             div.innerHTML = `
