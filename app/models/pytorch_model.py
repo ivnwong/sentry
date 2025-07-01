@@ -65,7 +65,7 @@ class LabQAModel:
             model_path = "model_files/model_1_clipnaK_portion_to_85_dil.pt"
             if os.path.exists(model_path):
                 self.model = Encoder()
-                self.model = torch.load(model_path, weights_only=False)
+                self.model = torch.load(model_path, weights_only=False, map_location=torch.device(self.device))
                 # self.model.load_state_dict(torch.load(model_path, map_location=self.device))
                 self.model.eval()
                 self.model.to(self.device)
