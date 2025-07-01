@@ -224,7 +224,7 @@ class LabQAModel:
         with torch.no_grad():
             prediction = self.model(input_tensor)
             prediction = prediction.cpu().numpy()
-        # print(prediction)
+        print(prediction)
         
         # Process results
         return self._process_prediction(prediction, patient_data, df)
