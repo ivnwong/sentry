@@ -213,7 +213,7 @@ class LabQAModel:
         """Make prediction using the model"""
         if not self.is_loaded():
             raise Exception("Model not loaded")
-        print(patient_data)
+        # print(patient_data)
         
         # Prepare input data
         df = self._prepare_input_data(patient_data)
@@ -224,7 +224,8 @@ class LabQAModel:
         with torch.no_grad():
             prediction = self.model(input_tensor)
             prediction = prediction.cpu().numpy()
-        print(prediction)
+        # print(prediction)
+        
         # Process results
         return self._process_prediction(prediction, patient_data, df)
     
@@ -375,6 +376,8 @@ class LabQAModel:
             }
             
             results["analytes"].append(analyte_result)
+        print(results)
+
         
         # Dilution value
         error_prob = prediction[0, -1]
