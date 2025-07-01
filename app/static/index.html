@@ -402,179 +402,183 @@
             <p>Data processed in Google Cloud </p>
         </header>
 
-        <div class="main-content">
-            <!-- Column 1: Patient Data & Renal Function Tests -->
-            <div class="column-1">
-                <h2>Patient Data & Renal Function</h2>
-                
-                <form id="qualityAssuranceForm">
-                    <!-- Patient Demographics -->
-                    <div class="form-section">
-                        <h3>Patient Demographics & Sample Info</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="sex">Sex</label>
-                                <select id="sex" name="sex" required>
-                                    <option value="">Select sex</option>
-                                    <option value="male" selected>Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="age">Age (years)</label>
-                                <input type="number" id="age" name="age" min="0" max="120" value="45" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="timeBetweenDraw">Time Between (hr)</label>
-                                <input type="number" id="timeBetweenDraw" name="timeBetweenDraw" min="0" step="0.1" value="24.0" required>
-                            </div>
-                        </div>
+<div class="main-content">
+    <form id="qualityAssuranceForm"> <!-- Start the form here -->
+        <!-- Column 1: Patient Data & Renal Function Tests -->
+        <div class="column-1">
+            <h2>Patient Data & Renal Function</h2>
+
+            <!-- Patient Demographics -->
+            <div class="form-section">
+                <h3>Patient Demographics & Sample Info</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+                        <select id="sex" name="sex" required>
+                            <option value="">Select sex</option>
+                            <option value="male" selected>Male</option>
+                            <option value="female">Female</option>
+                        </select>
                     </div>
-
-                    <!-- Renal Function Tests -->
-                    <div class="form-section">
-                        <h3>Renal Function Tests</h3>
-                        
-                        <div class="analyte-pair">
-                            <div class="analyte-name">Sodium (mmol/L)</div>
-                            <div class="paired-values">
-                                <div class="label-group">
-                                    <label for="sodium_previous">Previous Value</label>
-                                    <input type="number" id="sodium_previous" name="sodium_previous" step="0.1" min="90.0" max="200.0" value="138">
-                                </div>
-                                <div class="label-group">
-                                    <label for="sodium_current">Current Value</label>
-                                    <input type="number" id="sodium_current" name="sodium_current" step="0.1" min="90.0" max="200.0" value="140" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="analyte-pair">
-                            <div class="analyte-name">Potassium (mmol/L)</div>
-                            <div class="paired-values">
-                                <div class="label-group">
-                                    <label for="potassium_previous">Previous Value</label>
-                                    <input type="number" id="potassium_previous" name="potassium_previous" step="0.1" min="1.5" max="10.0" value="4.0">
-                                </div>
-                                <div class="label-group">
-                                    <label for="potassium_current">Current Value</label>
-                                    <input type="number" id="potassium_current" name="potassium_current" step="0.1" min="1.5" max="10.0" value="4.2" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="analyte-pair">
-                            <div class="analyte-name">Creatinine (μmol/L)</div>
-                            <div class="paired-values">
-                                <div class="label-group">
-                                    <label for="creatinine_previous">Previous Value</label>
-                                    <input type="number" id="creatinine_previous" name="creatinine_previous" step="0.1" min="10.0" max="2980.0" value="88">
-                                </div>
-                                <div class="label-group">
-                                    <label for="creatinine_current">Current Value</label>
-                                    <input type="number" id="creatinine_current" name="creatinine_current" step="0.1" min="10.0" max="2980.0" value="95" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="analyte-pair">
-                            <div class="analyte-name">Urea (mmol/L)</div>
-                            <div class="paired-values">
-                                <div class="label-group">
-                                    <label for="urea_previous">Previous Value</label>
-                                    <input type="number" id="urea_previous" name="urea_previous" step="0.1" min="0.5" max="97.4" value="6.2">
-                                </div>
-                                <div class="label-group">
-                                    <label for="urea_current">Current Value</label>
-                                    <input type="number" id="urea_current" name="urea_current" step="0.1" min="0.5" max="97.4" value="6.8" required>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="age">Age (years)</label>
+                        <input type="number" id="age" name="age" min="0" max="120" value="45" required>
                     </div>
-
-                    <div class="button-group">
-                        <button type="submit" class="btn">Analyze Laboratory Values</button>
-                        <button type="button" class="btn-clear" onclick="clearForm()">Clear All Fields</button>
+                    <div class="form-group">
+                        <label for="timeBetweenDraw">Time Between (hr)</label>
+                        <input type="number" id="timeBetweenDraw" name="timeBetweenDraw" min="0" step="0.1" value="24.0" required>
                     </div>
-                </form>
+                </div>
             </div>
 
-            <!-- Column 2: Liver Function Tests -->
-            <div class="column-2">
-                <h2>Liver Function Tests</h2>
-                
-                <div class="form-section">
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Total Protein (g/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="totalProtein_previous">Previous Value</label>
-                                <input type="number" id="totalProtein_previous" name="totalProtein_previous" step="0.1" min="12.0" max="132.0" value="68">
-                            </div>
-                            <div class="label-group">
-                                <label for="totalProtein_current">Current Value</label>
-                                <input type="number" id="totalProtein_current" name="totalProtein_current" step="0.1" min="12.0" max="132.0" value="72" required>
-                            </div>
+            <!-- Renal Function Tests -->
+            <div class="form-section">
+                <h3>Renal Function Tests</h3>
+
+                <div class="analyte-pair">
+                    <div class="analyte-name">Sodium (mmol/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="sodium_previous">Previous Value</label>
+                            <input type="number" id="sodium_previous" name="sodium_previous" step="0.1" min="90.0" max="200.0" value="138">
+                        </div>
+                        <div class="label-group">
+                            <label for="sodium_current">Current Value</label>
+                            <input type="number" id="sodium_current" name="sodium_current" step="0.1" min="90.0" max="200.0" value="140" required>
                         </div>
                     </div>
+                </div>
 
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Albumin (g/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="albumin_previous">Previous Value</label>
-                                <input type="number" id="albumin_previous" name="albumin_previous" step="0.1" min="4.0" max="66.0" value="40">
-                            </div>
-                            <div class="label-group">
-                                <label for="albumin_current">Current Value</label>
-                                <input type="number" id="albumin_current" name="albumin_current" step="0.1" min="4.0" max="66.0" value="42" required>
-                            </div>
+                <div class="analyte-pair">
+                    <div class="analyte-name">Potassium (mmol/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="potassium_previous">Previous Value</label>
+                            <input type="number" id="potassium_previous" name="potassium_previous" step="0.1" min="1.5" max="10.0" value="4.0">
+                        </div>
+                        <div class="label-group">
+                            <label for="potassium_current">Current Value</label>
+                            <input type="number" id="potassium_current" name="potassium_current" step="0.1" min="1.5" max="10.0" value="4.2" required>
                         </div>
                     </div>
+                </div>
 
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Alkaline Phosphatase (U/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="alkalinePhosphatase_previous">Previous Value</label>
-                                <input type="number" id="alkalinePhosphatase_previous" name="alkalinePhosphatase_previous" step="0.1" min="6.0" max="4464.0" value="78">
-                            </div>
-                            <div class="label-group">
-                                <label for="alkalinePhosphatase_current">Current Value</label>
-                                <input type="number" id="alkalinePhosphatase_current" name="alkalinePhosphatase_current" step="0.1" min="6.0" max="4464.0" value="85" required>
-                            </div>
+                <div class="analyte-pair">
+                    <div class="analyte-name">Creatinine (μmol/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="creatinine_previous">Previous Value</label>
+                            <input type="number" id="creatinine_previous" name="creatinine_previous" step="0.1" min="10.0" max="2980.0" value="88">
+                        </div>
+                        <div class="label-group">
+                            <label for="creatinine_current">Current Value</label>
+                            <input type="number" id="creatinine_current" name="creatinine_current" step="0.1" min="10.0" max="2980.0" value="95" required>
                         </div>
                     </div>
+                </div>
 
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Alanine Transaminase (U/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="alanineTransaminase_previous">Previous Value</label>
-                                <input type="number" id="alanineTransaminase_previous" name="alanineTransaminase_previous" step="0.1" min="5.0" max="8700.0" value="25">
-                            </div>
-                            <div class="label-group">
-                                <label for="alanineTransaminase_current">Current Value</label>
-                                <input type="number" id="alanineTransaminase_current" name="alanineTransaminase_current" step="0.1" min="5.0" max="8700.0" value="28" required>
-                            </div>
+                <div class="analyte-pair">
+                    <div class="analyte-name">Urea (mmol/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="urea_previous">Previous Value</label>
+                            <input type="number" id="urea_previous" name="urea_previous" step="0.1" min="0.5" max="97.4" value="6.2">
                         </div>
-                    </div>
-
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Total Bilirubin (μmol/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="totalBilirubin_previous">Previous Value</label>
-                                <input type="number" id="totalBilirubin_previous" name="totalBilirubin_previous" step="0.1" min="3.0" max="647.0" value="13">
-                            </div>
-                            <div class="label-group">
-                                <label for="totalBilirubin_current">Current Value</label>
-                                <input type="number" id="totalBilirubin_current" name="totalBilirubin_current" step="0.1" min="3.0" max="647.0" value="15" required>
-                            </div>
+                        <div class="label-group">
+                            <label for="urea_current">Current Value</label>
+                            <input type="number" id="urea_current" name="urea_current" step="0.1" min="0.5" max="97.4" value="6.8" required>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Column 2: Liver Function Tests -->
+        <div class="column-2">
+            <h2>Liver Function Tests</h2>
+
+            <!-- Move this entire section inside the form -->
+            <div class="form-section">
+                <div class="analyte-pair">
+                    <div class="analyte-name">Total Protein (g/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="totalProtein_previous">Previous Value</label>
+                            <input type="number" id="totalProtein_previous" name="totalProtein_previous" step="0.1" min="12.0" max="132.0" value="68">
+                        </div>
+                        <div class="label-group">
+                            <label for="totalProtein_current">Current Value</label>
+                            <input type="number" id="totalProtein_current" name="totalProtein_current" step="0.1" min="12.0" max="132.0" value="72" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analyte-pair">
+                    <div class="analyte-name">Albumin (g/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="albumin_previous">Previous Value</label>
+                            <input type="number" id="albumin_previous" name="albumin_previous" step="0.1" min="4.0" max="66.0" value="40">
+                        </div>
+                        <div class="label-group">
+                            <label for="albumin_current">Current Value</label>
+                            <input type="number" id="albumin_current" name="albumin_current" step="0.1" min="4.0" max="66.0" value="42" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analyte-pair">
+                    <div class="analyte-name">Alkaline Phosphatase (U/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="alkalinePhosphatase_previous">Previous Value</label>
+                            <input type="number" id="alkalinePhosphatase_previous" name="alkalinePhosphatase_previous" step="0.1" min="6.0" max="4464.0" value="78">
+                        </div>
+                        <div class="label-group">
+                            <label for="alkalinePhosphatase_current">Current Value</label>
+                            <input type="number" id="alkalinePhosphatase_current" name="alkalinePhosphatase_current" step="0.1" min="6.0" max="4464.0" value="85" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analyte-pair">
+                    <div class="analyte-name">Alanine Transaminase (U/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="alanineTransaminase_previous">Previous Value</label>
+                            <input type="number" id="alanineTransaminase_previous" name="alanineTransaminase_previous" step="0.1" min="5.0" max="8700.0" value="25">
+                        </div>
+                        <div class="label-group">
+                            <label for="alanineTransaminase_current">Current Value</label>
+                            <input type="number" id="alanineTransaminase_current" name="alanineTransaminase_current" step="0.1" min="5.0" max="8700.0" value="28" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analyte-pair">
+                    <div class="analyte-name">Total Bilirubin (μmol/L)</div>
+                    <div class="paired-values">
+                        <div class="label-group">
+                            <label for="totalBilirubin_previous">Previous Value</label>
+                            <input type="number" id="totalBilirubin_previous" name="totalBilirubin_previous" step="0.1" min="3.0" max="647.0" value="13">
+                        </div>
+                        <div class="label-group">
+                            <label for="totalBilirubin_current">Current Value</label>
+                            <input type="number" id="totalBilirubin_current" name="totalBilirubin_current" step="0.1" min="3.0" max="647.0" value="15" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Liver Function Tests content -->
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn">Analyze Laboratory Values</button>
+            <button type="button" class="btn-clear" onclick="clearForm()">Clear All Fields</button>
+        </div>
+    </form> <!-- End the form here -->
+</div>
+
 
             <!-- Column 3: Results Panel -->
             <div class="column-3">
@@ -702,7 +706,7 @@
                 console.error('Error:', error);
                 // Show error message
                 document.getElementById('loadingIndicator').style.display = 'none';
-                displayMockResults()
+                // displayMockResults()
                 alert('Analysis failed. Please try again.');
             }
         });
