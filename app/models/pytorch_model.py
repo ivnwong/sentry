@@ -286,7 +286,7 @@ class LabQAModel:
             }
             
             results["analytes"].append(analyte_result)
-        
+        print(results)
         # Dilution value
         error_prob = prediction[0, -1]
         if error_prob > 0.7:
