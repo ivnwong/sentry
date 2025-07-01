@@ -225,7 +225,6 @@ class LabQAModel:
             prediction = self.model(input_tensor)
             prediction = prediction.cpu().numpy()
         
-        
         # Process results
         return self._process_prediction(prediction, patient_data, df)
     
@@ -234,7 +233,7 @@ class LabQAModel:
         # Extract predicted values and error probabilities
         predicted_values = prediction[0, :9]  # First 9 values are true values
         error_probabilities = prediction[0, 9:]  # Last 10 values are error probabilities (9 analytes + 1 extra)
-        
+
         # Analyte mapping
         field_mapping = {
             'albumin': ('ALB', 0),
@@ -284,7 +283,7 @@ class LabQAModel:
                 "errorProbability": error_prob,
                 "riskLevel": risk_level
             }
-            print(analyte_result)
+
             results["analytes"].append(analyte_result)
         
         # Dilution value
@@ -391,9 +390,9 @@ class LabQAModel:
         
         dilution_result = {
             "name": 'Dilution',
-            "previousValue": np.nan,
-            "currentValue": np.nan,
-            "trueValue": np.nan,
+            "previousValue": None,
+            "currentValue": None,
+            "trueValue": None,
             "errorProbability": prediction[0, -1] * 100,
             "riskLevel": risk_level 
         }

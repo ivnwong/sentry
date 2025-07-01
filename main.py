@@ -4,6 +4,8 @@ from fastapi.responses import HTMLResponse, FileResponse
 from pydantic import BaseModel
 import uvicorn
 import os
+import numpy as np
+import math
 from typing import Optional, Dict, Any
 import json
 from datetime import datetime
@@ -49,6 +51,22 @@ class PatientData(BaseModel):
     alanineTransaminase_previous: Optional[float] = None
     totalBilirubin_previous: Optional[float] = None
 
+
+def clean_json_data(data: Any) -> Any:
+    """Recursively clean data to make it JSON compliant"""
+    if isinstance(data, dict):
+        return {key: clean_json_data(value) for key, value in data.items()}
+    elif isinstance(data, list):
+        return [clean_json_data(item) for item in data]
+    elif isinstance(data, (float, np.floating)):
+        if math.isnan(data) or math.isinf(data):
+            return None  # or return 0, or a default value
+        return float(data)
+    elif isinstance(data, (np.integer, np.int64, np.int32)):
+        return int(data)
+    else:
+        return data
+
 @app.get("/")
 async def root(request: Request, token: str = None):
     """Serve the main interface with token authentication"""
@@ -80,7 +98,7 @@ async def analyze_quality(
         # Log the response
         logger.log_response(token, "analyze_quality", "success")
         
-        return results
+        return clean_json_data(results)
         
     except Exception as e:
         logger.log_response(token, "analyze_quality", f"error: {str(e)}")
