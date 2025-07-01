@@ -224,7 +224,7 @@ class LabQAModel:
         with torch.no_grad():
             prediction = self.model(input_tensor)
             prediction = prediction.cpu().numpy()
-        print(prediction)
+        
         
         # Process results
         return self._process_prediction(prediction, patient_data, df)
@@ -284,9 +284,9 @@ class LabQAModel:
                 "errorProbability": error_prob,
                 "riskLevel": risk_level
             }
-            
+            print(analyte_result)
             results["analytes"].append(analyte_result)
-        print(results)
+        
         # Dilution value
         error_prob = prediction[0, -1]
         if error_prob > 0.7:
