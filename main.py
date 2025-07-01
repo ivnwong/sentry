@@ -20,7 +20,7 @@ model = LabQAModel()
 logger = RequestLogger()
 
 # Mount static files
-app.mount("/static", StaticFiles(directory="./static"), name="static")
+app.mount("/static", StaticFiles(directory="./app/static"), name="static")
 
 class PatientData(BaseModel):
     sex: str
@@ -65,7 +65,7 @@ async def root(request: Request, token: str = None):
 async def analyze_quality(
     patient_data: PatientData,
     request: Request,
-    # token: str = Depends(token_auth.get_token_from_header)
+    token: str
 ):
     """Analyze laboratory quality with PyTorch model"""
     try:
