@@ -376,9 +376,8 @@ class LabQAModel:
             }
             
             results["analytes"].append(analyte_result)
-        print(results)
 
-        
+
         # Dilution value
         error_prob = prediction[0, -1]
         if error_prob > 0.7:
@@ -404,7 +403,7 @@ class LabQAModel:
         results["interpretation"] = self._generate_interpretation(
             patient_data, high_risk_analytes, medium_risk_analytes
         )
-        
+        print(results)
         return results    
     
 
