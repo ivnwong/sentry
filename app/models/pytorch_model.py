@@ -399,7 +399,7 @@ class LabQAModel:
         results["analytes"].append(dilution_result)
         
         # Generate interpretation
-        results["interpretation"] = self._generate_interpretation(
+        results["interpretation"] = self._parse_analyte_results(
             patient_data, high_risk_analytes, medium_risk_analytes, results
         )
         # print(results)
@@ -482,3 +482,115 @@ class LabQAModel:
         """
         
         return interpretation
+
+
+def _parse_analyte_results(self, patient_data, high_risk_analytes: List, medium_risk_analytes: List, result: Dict) -> str:
+    """
+    Parse analyte dictionary and generate interpretative comment in HTML format.
+    
+    Args:
+        result (dict): Dictionary containing analytes data and interpretation
+    
+    Returns:
+        str: HTML formatted interpretation
+    """
+    
+    analytes = result['analytes']
+    html_content = []
+    
+    # Start HTML structure
+    html_content.append('<div class="lab-interpretation">')
+    html_content.append('<h3>Laboratory Results Interpretation</h3>')
+    
+    # Check for high error probability analytes (>0.5)
+    high_error_analytes = [a for a in analytes if a['errorProbability'] > 0.5]
+    
+    if high_error_analytes:
+        html_content.append('<div class="high-risk-section">')
+        html_content.append('<h4>High Error Probability Detected:</h4>')
+        html_content.append('<ul>')
+        
+        for analyte in high_error_analytes:
+            if analyte['name'] == 'Dilution':
+                html_content.append('<li><strong>Dilution contamination detected:</strong> Likely drip arm contamination. Recommend reflex testing for bicarbonate, chloride, and glucose.</li>')
+            else:
+                html_content.append(f'<li><strong>{analyte["name"]}:</strong> Error probability {analyte["errorProbability"]:.3f} - Recommend tracking analyzer channel for analytical performance.</li>')
+        
+        html_content.append('</ul>')
+        html_content.append('</div>')
+    
+    # Check for specific contamination patterns
+    contamination_detected = False
+    
+    # Check Potassium increase
+    k_analyte = next((a for a in analytes if a['name'] == 'K'), None)
+    if k_analyte and k_analyte['currentValue'] and k_analyte['trueValue']:
+        if k_analyte['currentValue'] > k_analyte['trueValue'] and k_analyte['errorProbability'] > 0.5:
+            html_content.append('<div class="contamination-alert">')
+            html_content.append('<p><strong>EDTA Contamination Suspected:</strong> Elevated potassium levels detected. Recommend reflex testing for Calcium and Magnesium.</p>')
+            html_content.append('</div>')
+            contamination_detected = True
+    
+    # Check Sodium changes
+    na_analyte = next((a for a in analytes if a['name'] == 'Sodium'), None)
+    if na_analyte and na_analyte['currentValue'] and na_analyte['trueValue']:
+        if na_analyte['errorProbability'] > 0.5:
+            if na_analyte['currentValue'] > na_analyte['trueValue']:
+                html_content.append('<div class="contamination-alert">')
+                html_content.append('<p><strong>Sodium Contamination Suspected:</strong> Elevated sodium levels suggest Na drip arm or sodium citrate contamination. Recommend reflex testing for bicarbonate, chloride, glucose, anion gap, and osmolal gap.</p>')
+                html_content.append('</div>')
+                contamination_detected = True
+            elif na_analyte['currentValue'] < na_analyte['trueValue']:
+                html_content.append('<div class="contamination-alert">')
+                html_content.append('<p><strong>Non-Sodium Drip Contamination:</strong> Decreased sodium levels detected. Recommend reflex testing for glucose, calcium, chloride, and lactate.</p>')
+                html_content.append('</div>')
+                contamination_detected = True
+    
+    # General assessment if no contamination detected
+    if not contamination_detected and not high_error_analytes:
+        html_content.append('<div class="normal-results">')
+        html_content.append('<h4>Assessment Summary:</h4>')
+        html_content.append('<p>All analytes show <strong>low risk levels</strong> with error probabilities below the 0.5 threshold. No significant contamination patterns detected.</p>')
+        
+        # Summary table
+        html_content.append('<table class="results-table" border="1" style="border-collapse: collapse; width: 100%; margin-top: 10px;">')
+        html_content.append('<thead>')
+        html_content.append('<tr style="background-color: #f0f0f0;">')
+        html_content.append('<th>Analyte</th><th>Current</th><th>True Value</th><th>Error Prob</th><th>Status</th>')
+        html_content.append('</tr>')
+        html_content.append('</thead>')
+        html_content.append('<tbody>')
+        
+        for analyte in analytes:
+            if analyte['currentValue'] is not None:
+                current_val = f"{analyte['currentValue']:.1f}"
+                true_val = f"{analyte['trueValue']:.2f}"
+            else:
+                current_val = "N/A"
+                true_val = "N/A"
+            
+            html_content.append('<tr>')
+            html_content.append(f'<td>{analyte["name"]}</td>')
+            html_content.append(f'<td>{current_val}</td>')
+            html_content.append(f'<td>{true_val}</td>')
+            html_content.append(f'<td>{analyte["errorProbability"]:.3f}</td>')
+            html_content.append(f'<td style="color: green;">{analyte["riskLevel"].title()}</td>')
+            html_content.append('</tr>')
+        
+        html_content.append('</tbody>')
+        html_content.append('</table>')
+        html_content.append('</div>')
+    
+    # Recommendations
+    html_content.append('<div class="recommendations">')
+    html_content.append('<h4>Recommendations:</h4>')
+    html_content.append('<ul>')
+    html_content.append('<li>Continue routine monitoring of all analytes</li>')
+    html_content.append('<li>Maintain current quality control procedures</li>')
+    html_content.append('<li>Monitor for any trending patterns in future results</li>')
+    html_content.append('</ul>')
+    html_content.append('</div>')
+    
+    html_content.append('</div>')
+    
+    return '\n'.join(html_content)
