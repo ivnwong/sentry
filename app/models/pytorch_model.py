@@ -421,8 +421,8 @@ class LabQAModel:
         ] + [f'{analyte}_percent' for analyte in self.analytes] + [f'{analyte}_diff' for analyte in self.analytes]
         
         # Find indices of the analyte _noise_data columns in the scaler
-        analyte_noise_data_columns = ['ALB_noise_data', 'ALP_noise_data', 'ALT_noise_data', 'CR_noise_data', 
-                                    'K_noise_data', 'Sodium_noise_data', 'TB_noise_data', 'TP_noise_data', 'U_noise_data']
+        analyte_noise_data_columns = ['ALB_x', 'ALP_x', 'ALT_x', 'CR_x', 
+                                    'K_x', 'Sodium_x', 'TB_x', 'TP_x', 'U_x']
         analyte_indices = [scaler_x_columns.index(col) for col in analyte_noise_data_columns]
         
         # Create a dummy array with the same shape as the scaler expects
