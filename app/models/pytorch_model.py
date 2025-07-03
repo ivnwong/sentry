@@ -437,7 +437,7 @@ class LabQAModel:
         
         # Inverse transform
         dummy_scaled[scaler_x_columns] = self.scaler.inverse_transform(dummy_scaled[scaler_x_columns])
-        print(dummy_scaled)
+        # print(dummy_scaled)
         # Extract the unscaled analyte values
         predicted_values_unscaled = dummy_scaled.loc[0, analyte_noise_data_columns]
         
