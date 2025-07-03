@@ -430,14 +430,16 @@ class LabQAModel:
         dummy_scaled = original_df.copy()
         
         # Replace the analyte _noise_data values with our predictions
-        for i, pred_idx in enumerate(analyte_indices):
-            dummy_scaled[0, pred_idx] = predicted_values_scaled[i]
+        # for i, pred_idx in enumerate(analyte_indices):
+        #     dummy_scaled.iloc[0, pred_idx] = predicted_values_scaled[i]
+
+        dummy_scaled.loc[0, analyte_noise_data_columns] = predicted_values_scaled
         
         # Inverse transform
         dummy_scaled[scaler_x_columns] = self.scaler.inverse_transform(dummy_scaled[scaler_x_columns])
         print(dummy_scaled)
         # Extract the unscaled analyte values
-        predicted_values_unscaled = dummy_scaled[0, analyte_indices]
+        predicted_values_unscaled = dummy_scaled.loc[0, analyte_noise_data_columns]
         
         return predicted_values_unscaled
 
