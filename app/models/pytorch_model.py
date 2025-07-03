@@ -400,7 +400,7 @@ class LabQAModel:
         
         # Generate interpretation
         results["interpretation"] = self._generate_interpretation(
-            patient_data, high_risk_analytes, medium_risk_analytes
+            patient_data, high_risk_analytes, medium_risk_analytes, results
         )
         # print(results)
         return results    
@@ -442,8 +442,10 @@ class LabQAModel:
         return predicted_values_unscaled
 
 
-    def _generate_interpretation(self, patient_data, high_risk_analytes: List, medium_risk_analytes: List) -> str:
+    def _generate_interpretation(self, patient_data, high_risk_analytes: List, medium_risk_analytes: List, result: Dict) -> str:
         """Generate clinical interpretation"""
+        print(result)
+
         interpretation = f"""
         <p><strong>Quality Assurance Summary for {patient_data.age}-year-old {patient_data.sex.title()}:</strong></p>
         <ul>
