@@ -337,6 +337,113 @@
                 gap: 0.3rem;
             }
         }
+        .error-report {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .monitoring-section {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        
+        .success-section {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .summary-section {
+            border-left-color: #007bff;
+            background: #e3f2fd;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.3em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .error-list, .action-list, .analyte-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .error-list li, .analyte-list li {
+            background: white;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid #dc3545;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .action-list li {
+            background: white;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid #17a2b8;
+            position: relative;
+            padding-left: 35px;
+        }
+        
+        .action-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 12px;
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        
+        .analyte-name {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .error-probability {
+            color: #dc3545;
+            font-size: 0.9em;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .summary-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+            display: block;
+        }
+        
+        .summary-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
 
         /* Ensure no scrolling on page */
         html, body {
@@ -552,7 +659,7 @@
                     </div>
 
                     <div class="interpretation-panel">
-                        <div id="interpretationText">
+                        <div id="interpretationText" class="error-report">
                             <!-- Interpretation will be populated here -->
                         </div>
                     </div>
