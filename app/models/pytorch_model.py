@@ -8,6 +8,8 @@ import os
 from typing import Dict, Any, List
 from datetime import datetime
 
+from comment_func import detect_preanalytical_errors_html
+
 class Encoder(nn.Module):
     def __init__(self):
         super().__init__()
@@ -582,3 +584,7 @@ class LabQAModel:
         html_content.append('</section>')
         
         return '\n'.join(html_content)
+    
+
+    def _parse_analyte_results(self, patient_data, high_risk_analytes: List, medium_risk_analytes: List, result: Dict)-> str:
+        return detect_preanalytical_errors_html(result)
