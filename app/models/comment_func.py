@@ -66,8 +66,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> Sodium approaching 150 mmol/L (current: {sodium['currentValue']}, previous: {sodium['previousValue']}) with dilution effect on {', '.join(protein_diluted)}</p>
             
             <p><strong>Additional Tests to Confirm:</strong></p>
-            - <strong>Chloride levels</strong> - Should be elevated (~150 mmol/L) parallel to sodium
-            - <strong>Calcium</strong> - May be decreased due to dilution
+            <strong>Chloride levels</strong> - Should be elevated (~150 mmol/L) parallel to sodium\n<strong>Calcium</strong> - May be decreased due to dilution\n
             """
             detected_errors.append(error_html)
             preanalytical_analytes.add('Sodium')
@@ -98,9 +97,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> Sodium approaching 75 mmol/L (current: {sodium['currentValue']}, previous: {sodium['previousValue']}) with mild dilution on {', '.join(protein_diluted)}</p>
             
             <p><strong>Additional Tests to Confirm:</strong></p>
-            - <strong>Glucose levels</strong> - Should be markedly elevated due to D50W component
-            - <strong>Chloride levels</strong> - Should be changed parallel to sodium
-            - <strong>Calcium levels</strong> - May be decreased due to dilution
+            <strong>Glucose levels</strong> - Should be markedly elevated due to D50W component\n<strong>Chloride levels</strong> - Should be changed parallel to sodium\n<strong>Calcium levels</strong> - May be decreased due to dilution\n
             """
             detected_errors.append(error_html)
             preanalytical_analytes.add('Sodium')
@@ -133,9 +130,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> Sodium elevation by {na_change*100:.1f}% (current: {sodium['currentValue']}, previous: {sodium['previousValue']}) with mild dilution effects on {', '.join(protein_diluted)}</p>
             
             <p><strong>Additional Tests to Confirm:</strong></p>
-            - <strong>Glucose levels</strong> - Should be markedly elevated due to glucose infusion
-            - <strong>Calcium levels</strong> - May be decreased due to dilution
-            - <strong>Chloride levels</strong> - Should be decreased parallel to sodium
+            <strong>Glucose levels</strong> - Should be markedly elevated due to glucose infusion\n<strong>Calcium levels</strong> - May be decreased due to dilution\n<strong>Chloride levels</strong> - Should be decreased parallel to sodium\n
             """
             detected_errors.append(error_html)
             preanalytical_analytes.add('Sodium')
@@ -157,12 +152,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> Potassium elevation by {k_change*100:.1f}% (current: {potassium['currentValue']}, previous: {potassium['previousValue']}){alp_reduced}</p>
             
             <p><strong>Additional Tests to Differentiate KCl vs EDTA Contamination:</strong></p>
-            - <strong>Calcium levels</strong> - Will be critically low with EDTA, slightly diluted with KCl drip
-            - <strong>Magnesium levels</strong> - Will be low with EDTA due to chelation, slightly diluted with KCl
-            - <strong>Alkaline phosphatase (ALP)</strong> - May be reduced with EDTA due to Mg2+/Zn2+ chelation, slightly diluted with KCl
-            - <strong>Chloride levels</strong> - Should be decreased parallel to potassium
-            - <strong>Glucose levels</strong> - Should be markedly elevated due to KCl in glucose infusion
-            - <strong>Sample collection history</strong> - Check tube sequence for EDTA tubes
+            <strong>Calcium levels</strong> - Will be critically low with EDTA, slightly diluted with KCl drip\n<strong>Magnesium levels</strong> - Will be low with EDTA due to chelation, slightly diluted with KCl\n<strong>Alkaline phosphatase (ALP)</strong> - May be reduced with EDTA due to Mg2+/Zn2+ chelation, slightly diluted with KCl\n<strong>Chloride levels</strong> - Should be decreased parallel to potassium\n<strong>Glucose levels</strong> - Should be markedly elevated due to KCl in glucose infusion\n<strong>Sample collection history</strong> - Check tube sequence for EDTA tubes\n
             """
             detected_errors.append(error_html)
             preanalytical_analytes.add('K')
@@ -184,11 +174,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> Sodium elevation by {na_change*100:.1f}% (current: {sodium['currentValue']}, previous: {sodium['previousValue']}) without potassium elevation</p>
             
             <p><strong>Additional Tests to Differentiate Citrate vs Bicarbonate Contamination:</strong></p>
-            - <strong>Calcium levels</strong> - Will be decreased with citrate due to chelation, diluted with bicarbonate
-            - <strong>Blood gas analysis (pH)</strong> - Will be elevated (alkalotic) with bicarbonate and citrate
-            - <strong>Bicarbonate/CO2 levels</strong> - Will be elevated with sodium bicarbonate contamination
-            - <strong>Anion gap</strong> - May be decreased with bicarbonate and citrate contamination
-            - <strong>Sample collection history</strong> - Check tube sequence for citrate tubes
+            <strong>Calcium levels</strong> - Will be decreased with citrate due to chelation, diluted with bicarbonate\n<strong>Blood gas analysis (pH)</strong> - Will be elevated (alkalotic) with bicarbonate and citrate\n<strong>Bicarbonate/CO2 levels</strong> - Will be elevated with sodium bicarbonate contamination\n<strong>Anion gap</strong> - May be decreased with bicarbonate and citrate contamination\n<strong>Sample collection history</strong> - Check tube sequence for citrate tubes\n
             """
             detected_errors.append(error_html)
             preanalytical_analytes.add('Sodium')
@@ -225,9 +211,9 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> {dilution_reason}</p>
             
             <p><strong>Additional Tests to Confirm:</strong></p>
-            - <strong>Sodium and chloride</strong> - Should also be proportionally changed if saline drip contamination
-            - <strong>Glucose</strong> - Should also be proportionally changed if glucose drip contamination
-            - <strong>Other analytes (e.g. calcium, lactate, phosphate or others)</strong> - Depend on formulation of IV fluid
+            <strong>Sodium and chloride</strong> - Should also be proportionally changed if saline drip contamination\n<strong>Glucose</strong> - Should also be proportionally changed if glucose drip contamination\n<strong>Other analytes (e.g. calcium, lactate, phosphate or others)</strong> - Depend on formulation of IV fluid\n
+
+
             """
             detected_errors.append(error_html)
             for protein in proteins_decreased:
@@ -265,8 +251,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
         <p><strong>Finding:</strong> Multiple analytes proportionally increased: {', '.join(proteins_increased + other_increased)}</p>
         
         <p><strong>Additional Tests to Confirm:</strong></p>
-        - <strong>Serum osmolality</strong> - Will be increased proportionally
-        - <strong>Visual inspection</strong> - Check for sample volume loss
+        <strong>Serum osmolality</strong> - Will be increased proportionally\n<strong>Visual inspection</strong> - Check for sample volume loss\n
         """
         detected_errors.append(error_html)
         for protein in proteins_increased:
@@ -290,10 +275,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <p><strong>Finding:</strong> Potassium elevation by {k_change*100:.1f}% with enzyme elevation: {', '.join(enzyme_elevation)}</p>
             
             <p><strong>Additional Tests to Confirm:</strong></p>
-            - <strong>Free hemoglobin</strong> - Will be markedly elevated
-            - <strong>Haptoglobin</strong> - Will be decreased (consumed)
-            - <strong>LDH</strong> - Will be elevated due to cell lysis
-            - <strong>Visual inspection/Haemolysis index</strong> - Serum will appear pink/red
+            <strong>Free hemoglobin</strong> - Will be markedly elevated\n<strong>Haptoglobin</strong> - Will be decreased (consumed)\n<strong>LDH</strong> - Will be elevated due to cell lysis\n<strong>Visual inspection/Haemolysis index</strong> - Serum will appear pink/red\n
             """
             detected_errors.append(error_html)
             preanalytical_analytes.add('K')
@@ -302,6 +284,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
     for analyte in high_prob_analytes:
         if analyte['name'] not in preanalytical_analytes:
             analytical_monitoring.append(analyte['name'])
+
 
     # Generate HTML output
     # html_output = "<html><body>"
