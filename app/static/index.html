@@ -337,112 +337,152 @@
                 gap: 0.3rem;
             }
         }
-        .error-report {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
+        .medical-report {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px;
+            background: white;
+            color: #2d3748;
             line-height: 1.6;
         }
         
-        .section {
-            background: #f8f9fa;
-            border-left: 4px solid #dc3545;
-            padding: 15px 20px;
+        .alert-error {
+            background: #fed7d7;
+            border: 1px solid #feb2b2;
+            border-radius: 8px;
+            padding: 20px;
             margin: 20px 0;
-            border-radius: 0 8px 8px 0;
         }
         
-        .monitoring-section {
-            border-left-color: #ffc107;
-            background: #fff3cd;
+        .alert-warning {
+            background: #fef5e7;
+            border: 1px solid #f6e05e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
         }
         
-        .success-section {
-            border-left-color: #28a745;
-            background: #d4edda;
+        .alert-success {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
         }
         
-        .summary-section {
-            border-left-color: #007bff;
-            background: #e3f2fd;
+        .alert-info {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            margin: 0 0 15px 0;
+            font-size: 1.5em;
+            font-weight: 600;
         }
         
         h3 {
-            color: #2c3e50;
-            margin-top: 0;
-            font-size: 1.3em;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 8px;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+            font-weight: 600;
         }
         
-        .error-list, .action-list, .analyte-list {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .error-list li, .analyte-list li {
+        .error-item {
             background: white;
-            margin: 8px 0;
-            padding: 10px 15px;
+            padding: 15px;
+            margin: 10px 0;
             border-radius: 6px;
-            border-left: 3px solid #dc3545;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #e53e3e;
         }
         
-        .action-list li {
+        .error-title {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 5px;
+        }
+        
+        .error-finding {
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        
+        .test-list {
+            margin: 10px 0;
+        }
+        
+        .test-item {
+            background: #f7fafc;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+        
+        .analyte-item {
             background: white;
+            padding: 12px;
             margin: 8px 0;
-            padding: 10px 15px;
             border-radius: 6px;
-            border-left: 3px solid #17a2b8;
-            position: relative;
-            padding-left: 35px;
-        }
-        
-        .action-list li::before {
-            content: "✓";
-            position: absolute;
-            left: 12px;
-            color: #17a2b8;
-            font-weight: bold;
+            border-left: 4px solid #ed8936;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .analyte-name {
-            font-weight: bold;
-            color: #495057;
+            font-weight: 600;
         }
         
-        .error-probability {
-            color: #dc3545;
+        .error-prob {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 4px 8px;
+            border-radius: 4px;
             font-size: 0.9em;
+            font-weight: 500;
         }
         
-        .summary-grid {
+        .actions {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .action-item {
+            padding: 5px 0;
+            color: #4a5568;
+        }
+        
+        .summary-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-top: 15px;
+            margin: 20px 0;
         }
         
-        .summary-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
+        .stat-box {
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 8px;
         }
         
-        .summary-number {
-            font-size: 2em;
+        .stat-number {
+            font-size: 2.5em;
             font-weight: bold;
-            color: #007bff;
-            display: block;
+            color: #3182ce;
+            line-height: 1;
         }
         
-        .summary-label {
-            color: #6c757d;
+        .stat-label {
+            color: #718096;
             font-size: 0.9em;
+            margin-top: 5px;
         }
 
         /* Ensure no scrolling on page */
@@ -659,7 +699,7 @@
                     </div>
 
                     <div class="interpretation-panel">
-                        <div id="interpretationText" class="error-report">
+                        <div id="interpretationText" class="medical-report">
                             <!-- Interpretation will be populated here -->
                         </div>
                     </div>

@@ -375,51 +375,78 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
 
     if detected_errors:
         html_output += """
-        <div class="section">
-            <h3> Preanalytical Errors Detected</h3>
-            <ul class="error-list">
+        <div class="alert-error">
+            <h2>Preanalytical Errors Detected</h2>
         """
+        
+        # Group errors by type for better organization
+        error_groups = {}
         for error in detected_errors:
-            html_output += f"                <li>{error}</li>\n"
-        html_output += "            </ul>\n        </div>\n"
+            # Extract the main error type (first part before the colon or finding)
+            if "Potassium Contamination" in error:
+                if "Potassium Contamination" not in error_groups:
+                    error_groups["Potassium Contamination"] = []
+                error_groups["Potassium Contamination"].append(error)
+            elif "Hemolysis" in error:
+                if "Hemolysis" not in error_groups:
+                    error_groups["Hemolysis"] = []
+                error_groups["Hemolysis"].append(error)
+            else:
+                if "Other" not in error_groups:
+                    error_groups["Other"] = []
+                error_groups["Other"].append(error)
+        
+        for group_name, group_errors in error_groups.items():
+            html_output += f"""
+            <div class="error-item">
+                <div class="error-title">{group_name}</div>
+            """
+            for error in group_errors:
+                if "Finding:" in error:
+                    finding_part = error.split("Finding:")[1].strip()
+                    html_output += f'<div class="error-finding">Finding: {finding_part}</div>'
+                elif "Additional Tests" in error:
+                    html_output += f'<div class="error-finding">{error}</div>'
+                    # Add test items here if they exist
+                else:
+                    html_output += f'<div class="test-item">{error}</div>'
+            
+            html_output += "</div>"
+        
+        html_output += "</div>"
 
     if analytical_monitoring:
         html_output += """
-        <div class="section monitoring-section">
-            <h3> Analytical Monitoring Required</h3>
-            <p>The following analytes show high error probability (>0.5) and require continuous monitoring for <strong>analytical errors</strong>:</p>
-            
-            <ul class="analyte-list">
+        <div class="alert-warning">
+            <h2>Analytical Monitoring Required</h2>
+            <p>High error probability analytes requiring continuous monitoring:</p>
         """
         
         for analyte in analytical_monitoring:
             error_prob = next(a['errorProbability'] for a in result_data['analytes'] if a['name'] == analyte)
             html_output += f"""
-                <li>
-                    <span class="analyte-name">{analyte}</span>
-                    <br>
-                    <span class="error-probability">Error probability: {error_prob:.3f}</span>
-                </li>
+            <div class="analyte-item">
+                <span class="analyte-name">{analyte}</span>
+                <span class="error-prob">{error_prob:.3f}</span>
+            </div>
             """
         
         html_output += """
-            </ul>
-            
-            <h4>Recommended Actions:</h4>
-            <ul class="action-list">
-                <li>Check instrument calibration and drift</li>
-                <li>Verify reagent quality and expiration dates</li>
-                <li>Review recent QC results and trends</li>
-                <li>Inspect analytical procedures and maintenance logs</li>
-                <li>Consider running duplicate analyses</li>
-            </ul>
+            <div class="actions">
+                <h3>Recommended Actions:</h3>
+                <div class="action-item">• Check instrument calibration and drift</div>
+                <div class="action-item">• Verify reagent quality and expiration dates</div>
+                <div class="action-item">• Review recent QC results and trends</div>
+                <div class="action-item">• Inspect analytical procedures and maintenance logs</div>
+                <div class="action-item">• Consider running duplicate analyses</div>
+            </div>
         </div>
         """
 
     if not detected_errors and not analytical_monitoring:
         html_output += """
-        <div class="section success-section">
-            <h3> Analysis Result</h3>
+        <div class="alert-success">
+            <h2>Analysis Complete</h2>
             <p><strong>No significant preanalytical or analytical errors detected.</strong></p>
             <p>All analyte error probabilities are below the 0.5 threshold.</p>
         </div>
@@ -432,27 +459,27 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
     monitoring_count = len(analytical_monitoring)
 
     html_output += f"""
-        <div class="section summary-section">
-            <h3> Summary</h3>
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <span class="summary-number">{total_analytes}</span>
-                    <span class="summary-label">Total Analytes Evaluated</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-number">{high_error_count}</span>
-                    <span class="summary-label">High Error Probability (>0.5)</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-number">{preanalytical_count}</span>
-                    <span class="summary-label">Preanalytical Errors</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-number">{monitoring_count}</span>
-                    <span class="summary-label">Monitoring Required</span>
-                </div>
+    <div class="alert-info">
+        <h2>Summary</h2>
+        <div class="summary-stats">
+            <div class="stat-box">
+                <div class="stat-number">{total_analytes}</div>
+                <div class="stat-label">Total Analytes</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{high_error_count}</div>
+                <div class="stat-label">High Error Probability</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{preanalytical_count}</div>
+                <div class="stat-label">Preanalytical Errors</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">{monitoring_count}</div>
+                <div class="stat-label">Monitoring Required</div>
             </div>
         </div>
+    </div>
     </div>
     """
     
