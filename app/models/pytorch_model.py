@@ -8,7 +8,7 @@ import os
 from typing import Dict, Any, List
 from datetime import datetime
 
-from comment_func import detect_preanalytical_errors_html
+from app.models.comment_func import detect_preanalytical_errors_html
 
 class Encoder(nn.Module):
     def __init__(self):
