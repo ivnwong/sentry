@@ -371,6 +371,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
     
     # html_output += "</body></html>"
     
+    html_output=""
 
     if detected_errors:
         html_output += """
