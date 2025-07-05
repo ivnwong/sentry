@@ -321,25 +321,77 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
     
     # Generate HTML output
     # html_output = "<html><body>"
+    # html_output = ""
+
+    # if detected_errors:
+    #     html_output += "<h3>Preanalytical Errors Detected:</h3>"
+    #     for error in detected_errors:
+    #         html_output += error
+    
+    # if analytical_monitoring:
+    #     html_output += """
+    #     <h3>Analytical Monitoring Required:</h3>
+    #     <p>The following analytes show high error probability (>0.5) and require continuous monitoring for <strong>analytical errors</strong>:</p>
+    #     <ul>
+    #     """
+    #     for analyte in analytical_monitoring:
+    #         error_prob = next(a['errorProbability'] for a in result_data['analytes'] if a['name'] == analyte)
+    #         html_output += f"<li><strong>{analyte}</strong> (Error probability: {error_prob:.3f})</li>"
+        
+    #     html_output += """
+    #     </ul>
+    #     <p><strong>Recommended Actions:</strong></p>
+    #     <ul>
+    #         <li>Check instrument calibration and drift</li>
+    #         <li>Verify reagent quality and expiration dates</li>
+    #         <li>Review recent QC results and trends</li>
+    #         <li>Inspect analytical procedures and maintenance logs</li>
+    #         <li>Consider running duplicate analyses</li>
+    #     </ul>
+    #     """
+    
+    # if not detected_errors and not analytical_monitoring:
+    #     html_output += """
+    #     <h3>Analysis Result:</h3>
+    #     <p><strong>No significant preanalytical or analytical errors detected.</strong></p>
+    #     <p>All analyte error probabilities are below the 0.5 threshold.</p>
+    #     """
+    
+    # # Summary statistics
+    # total_analytes = len(result_data['analytes'])
+    # high_error_count = len(high_prob_analytes)
+    
+    # html_output += f"""
+    # <h3>Summary:</h3>
+    # <p>Total analytes evaluated: {total_analytes}</p>
+    # <p>Analytes with error probability >0.5: {high_error_count}</p>
+    # <p>Preanalytical errors identified: {len(detected_errors)}</p>
+    # <p>Channels requiring analytical monitoring: {len(analytical_monitoring)}</p>
+    # """
+    
+    # html_output += "</body></html>"
+    
+
     html_output = ""
 
     if detected_errors:
-        html_output += "<h3>Preanalytical Errors Detected:</h3>"
+        html_output += "<h3>Preanalytical Errors Detected:</h3>\n"
         for error in detected_errors:
-            html_output += error
-    
+            html_output += f"{error}\n"
+
     if analytical_monitoring:
         html_output += """
         <h3>Analytical Monitoring Required:</h3>
         <p>The following analytes show high error probability (>0.5) and require continuous monitoring for <strong>analytical errors</strong>:</p>
         <ul>
         """
+        
         for analyte in analytical_monitoring:
             error_prob = next(a['errorProbability'] for a in result_data['analytes'] if a['name'] == analyte)
-            html_output += f"<li><strong>{analyte}</strong> (Error probability: {error_prob:.3f})</li>"
+            html_output += f"        <li><strong>{analyte}</strong> (Error probability: {error_prob:.3f})</li>\n"
         
-        html_output += """
-        </ul>
+        html_output += """    </ul>
+        
         <p><strong>Recommended Actions:</strong></p>
         <ul>
             <li>Check instrument calibration and drift</li>
@@ -349,28 +401,27 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
             <li>Consider running duplicate analyses</li>
         </ul>
         """
-    
+
     if not detected_errors and not analytical_monitoring:
         html_output += """
         <h3>Analysis Result:</h3>
         <p><strong>No significant preanalytical or analytical errors detected.</strong></p>
         <p>All analyte error probabilities are below the 0.5 threshold.</p>
         """
-    
+
     # Summary statistics
     total_analytes = len(result_data['analytes'])
     high_error_count = len(high_prob_analytes)
-    
+    preanalytical_count = len(detected_errors)
+    monitoring_count = len(analytical_monitoring)
+
     html_output += f"""
     <h3>Summary:</h3>
     <p>Total analytes evaluated: {total_analytes}</p>
     <p>Analytes with error probability >0.5: {high_error_count}</p>
-    <p>Preanalytical errors identified: {len(detected_errors)}</p>
-    <p>Channels requiring analytical monitoring: {len(analytical_monitoring)}</p>
+    <p>Preanalytical errors identified: {preanalytical_count}</p>
+    <p>Channels requiring analytical monitoring: {monitoring_count}</p>
     """
-    
-    # html_output += "</body></html>"
-    
     return html_output
 
 

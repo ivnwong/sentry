@@ -15,83 +15,100 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f7fa;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.3;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .container {
             max-width: 2000px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
             text-align: center;
+            flex-shrink: 0;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        header p {
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
         }
 
         .main-content {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 2rem;
+            gap: 10px;
             width: 100%;
+            flex: 1;
+            overflow: hidden;
         }
 
         .column-1, .column-2, .column-3 {
             background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            min-width: 0; /* Prevents grid items from growing beyond their fraction */
-            overflow-wrap: break-word; /* Ensures long text wraps */
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 0;
+            overflow-y: auto;
+            height: 100%;
         }
 
         .column-1 h2, .column-2 h2, .column-3 h2 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.8rem;
             color: #2d3748;
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 600;
-            word-wrap: break-word;
         }
 
         .form-section {
-            margin-bottom: 2rem;
-            padding: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
             border: 1px solid #e1e5e9;
-            border-radius: 8px;
+            border-radius: 6px;
             min-width: 0;
         }
 
         .form-section h3 {
             color: #4a5568;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #e1e5e9;
-            padding-bottom: 0.5rem;
-            word-wrap: break-word;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid #e1e5e9;
+            padding-bottom: 0.3rem;
+            font-size: 0.9rem;
         }
 
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .paired-values {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
+            gap: 0.4rem;
             align-items: end;
             min-width: 0;
         }
 
         .paired-values label {
-            font-size: 0.85rem;
-            margin-bottom: 0.3rem;
-            word-wrap: break-word;
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
         }
 
         .paired-values .label-group {
@@ -101,20 +118,19 @@
         }
 
         .analyte-pair {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem;
             background-color: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 4px;
             min-width: 0;
         }
 
         .analyte-name {
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             color: #2d3748;
-            font-size: 0.9rem;
-            word-wrap: break-word;
-            line-height: 1.4;
+            font-size: 0.8rem;
+            line-height: 1.2;
         }
 
         .form-group {
@@ -125,17 +141,16 @@
 
         label {
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             color: #4a5568;
-            font-size: 0.9rem;
-            word-wrap: break-word;
+            font-size: 0.8rem;
         }
 
         input, select {
-            padding: 0.75rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 0.5rem;
+            border: 1px solid #e1e5e9;
+            border-radius: 4px;
+            font-size: 0.8rem;
             transition: border-color 0.3s ease;
             min-width: 0;
             width: 100%;
@@ -147,19 +162,19 @@
         }
 
         .button-group {
-            margin-top: 2rem;
+            margin-top: 1rem;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
             flex-direction: column;
         }
 
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1rem;
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s ease;
@@ -168,16 +183,16 @@
         }
 
         .btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .btn-clear {
             background: #718096;
             color: white;
-            padding: 0.75rem 1rem;
+            padding: 0.6rem 0.8rem;
             border: none;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
             cursor: pointer;
             width: 100%;
             min-width: 0;
@@ -189,8 +204,8 @@
 
         .results-grid {
             display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
             min-width: 0;
         }
 
@@ -198,12 +213,12 @@
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
             align-items: center;
-            padding: 0.75rem;
-            border-radius: 6px;
-            border-left: 4px solid;
-            font-size: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border-left: 3px solid;
+            font-size: 0.7rem;
             min-width: 0;
-            gap: 0.25rem;
+            gap: 0.2rem;
         }
 
         .analyte-result > div {
@@ -229,11 +244,11 @@
         }
 
         .risk-indicator {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 0.5rem;
+            margin-right: 0.3rem;
         }
 
         .risk-low { background-color: #38a169; }
@@ -242,50 +257,35 @@
 
         .change-indicator {
             font-weight: 600;
-            padding: 0.2rem 0.3rem;
-            border-radius: 3px;
-            /* font-size: 0.7rem; */
+            padding: 0.1rem 0.2rem;
+            border-radius: 2px;
+            font-size: 0.65rem;
         }
-
-        /* .change-positive {
-            background-color: #fed7d7;
-            color: #c53030;
-        }
-
-        .change-negative {
-            background-color: #bee3f8;
-            color: #2b6cb0;
-        }
-
-        .change-stable {
-            background-color: #f0fff4;
-            color: #38a169;
-        } */
 
         .interpretation-panel {
             background-color: #f7fafc;
             border: 1px solid #e1e5e9;
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin-top: 1rem;
+            border-radius: 4px;
+            padding: 0.8rem;
+            margin-top: 0.8rem;
             min-width: 0;
-            word-wrap: break-word;
+            font-size: 0.8rem;
         }
 
         .loading {
             display: none;
             text-align: center;
-            padding: 2rem;
+            padding: 1rem;
         }
 
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.8rem;
         }
 
         @keyframes spin {
@@ -297,12 +297,12 @@
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr;
             font-weight: 600;
-            padding: 0.75rem;
+            padding: 0.5rem;
             background-color: #edf2f7;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 0.8rem;
-            gap: 0.25rem;
+            border-radius: 4px;
+            margin-bottom: 0.6rem;
+            font-size: 0.7rem;
+            gap: 0.2rem;
             min-width: 0;
         }
 
@@ -317,7 +317,7 @@
         @media (max-width: 1200px) {
             .main-content {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 1.5rem;
+                gap: 8px;
             }
             
             .column-3 {
@@ -328,292 +328,242 @@
         @media (max-width: 900px) {
             .main-content {
                 grid-template-columns: minmax(0, 1fr);
-                gap: 1.5rem;
-            }
-            
-            .column-1, .column-2, .column-3 {
-                padding: 1.5rem;
+                gap: 8px;
             }
             
             .analyte-result, .results-header {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 0.5rem;
-            }
-            
-            .analyte-result > div, .results-header > div {
-                padding: 0.5rem;
-                border-bottom: 1px solid #e1e5e9;
-                white-space: normal;
-                text-overflow: unset;
-                overflow: visible;
-            }
-            
-            .analyte-result > div:last-child, .results-header > div:last-child {
-                border-bottom: none;
+                gap: 0.3rem;
             }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .column-1, .column-2, .column-3 {
-                padding: 1rem;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .paired-values {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .button-group {
-                gap: 0.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 1.5rem;
-            }
-            
-            header h1 {
-                font-size: 1.5rem;
-            }
-            
-            header p {
-                font-size: 0.9rem;
-            }
+        /* Ensure no scrolling on page */
+        html, body {
+            height: 100%;
+            overflow: hidden;
         }
 </style>
-
-
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Smart Error-detection and Neural Triggered Reflex sYstem -- SENTRY</h1>
             <p>Advanced multivariate analysis for laboratory error detection and quality control</p>
-            <p>Data processed in Google Cloud </p>
+            <p>Data processed in Google Cloud</p>
         </header>
 
-    <div class="main-content">
-        <!-- Column 1: Patient Data & Renal Function Tests -->
-        <div class="column-1">
-            <h2>Patient Data & Renal Function</h2>
-            
-            <form id="qualityAssuranceForm">
-                <!-- Patient Demographics -->
+        <div class="main-content">
+            <!-- Column 1: Patient Data & Renal Function Tests -->
+            <div class="column-1">
+                <h2>Patient Data & Renal Function</h2>
+                
+                <form id="qualityAssuranceForm">
+                    <!-- Patient Demographics -->
+                    <div class="form-section">
+                        <h3>Patient Demographics & Sample Info</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sex">Sex</label>
+                                <select id="sex" name="sex" required>
+                                    <option value="">Select sex</option>
+                                    <option value="male" selected>Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age (years)</label>
+                                <input type="number" id="age" name="age" min="0" max="120" value="45" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeBetweenDraw">Time Between (hr)</label>
+                                <input type="number" id="timeBetweenDraw" name="timeBetweenDraw" min="0" step="0.1" value="24.0" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Renal Function Tests -->
+                    <div class="form-section">
+                        <h3>Renal Function Tests</h3>
+                        
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Sodium (mmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="sodium_previous">Previous Value</label>
+                                    <input type="number" id="sodium_previous" name="sodium_previous" step="0.1" min="90.0" max="200.0" value="138">
+                                </div>
+                                <div class="label-group">
+                                    <label for="sodium_current">Current Value</label>
+                                    <input type="number" id="sodium_current" name="sodium_current" step="0.1" min="90.0" max="200.0" value="140" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Potassium (mmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="potassium_previous">Previous Value</label>
+                                    <input type="number" id="potassium_previous" name="potassium_previous" step="0.1" min="1.5" max="10.0" value="4.0">
+                                </div>
+                                <div class="label-group">
+                                    <label for="potassium_current">Current Value</label>
+                                    <input type="number" id="potassium_current" name="potassium_current" step="0.1" min="1.5" max="10.0" value="4.2" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Creatinine (μmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="creatinine_previous">Previous Value</label>
+                                    <input type="number" id="creatinine_previous" name="creatinine_previous" step="0.1" min="10.0" max="2980.0" value="88">
+                                </div>
+                                <div class="label-group">
+                                    <label for="creatinine_current">Current Value</label>
+                                    <input type="number" id="creatinine_current" name="creatinine_current" step="0.1" min="10.0" max="2980.0" value="95" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analyte-pair">
+                            <div class="analyte-name">Urea (mmol/L)</div>
+                            <div class="paired-values">
+                                <div class="label-group">
+                                    <label for="urea_previous">Previous Value</label>
+                                    <input type="number" id="urea_previous" name="urea_previous" step="0.1" min="0.5" max="97.4" value="6.2">
+                                </div>
+                                <div class="label-group">
+                                    <label for="urea_current">Current Value</label>
+                                    <input type="number" id="urea_current" name="urea_current" step="0.1" min="0.5" max="97.4" value="6.8" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Column 2: Liver Function Tests + Buttons -->
+            <div class="column-2">
+                <h2>Liver Function Tests</h2>
+                
                 <div class="form-section">
-                    <h3>Patient Demographics & Sample Info</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="sex">Sex</label>
-                            <select id="sex" name="sex" required>
-                                <option value="">Select sex</option>
-                                <option value="male" selected>Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                    <div class="analyte-pair">
+                        <div class="analyte-name">Total Protein (g/L)</div>
+                        <div class="paired-values">
+                            <div class="label-group">
+                                <label for="totalProtein_previous">Previous Value</label>
+                                <input type="number" id="totalProtein_previous" name="totalProtein_previous" step="0.1" min="12.0" max="132.0" value="68" form="qualityAssuranceForm">
+                            </div>
+                            <div class="label-group">
+                                <label for="totalProtein_current">Current Value</label>
+                                <input type="number" id="totalProtein_current" name="totalProtein_current" step="0.1" min="12.0" max="132.0" value="72" form="qualityAssuranceForm" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="age">Age (years)</label>
-                            <input type="number" id="age" name="age" min="0" max="120" value="45" required>
+                    </div>
+
+                    <div class="analyte-pair">
+                        <div class="analyte-name">Albumin (g/L)</div>
+                        <div class="paired-values">
+                            <div class="label-group">
+                                <label for="albumin_previous">Previous Value</label>
+                                <input type="number" id="albumin_previous" name="albumin_previous" step="0.1" min="4.0" max="66.0" value="40" form="qualityAssuranceForm">
+                            </div>
+                            <div class="label-group">
+                                <label for="albumin_current">Current Value</label>
+                                <input type="number" id="albumin_current" name="albumin_current" step="0.1" min="4.0" max="66.0" value="42" form="qualityAssuranceForm" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="timeBetweenDraw">Time Between (hr)</label>
-                            <input type="number" id="timeBetweenDraw" name="timeBetweenDraw" min="0" step="0.1" value="24.0" required>
+                    </div>
+
+                    <div class="analyte-pair">
+                        <div class="analyte-name">Alkaline Phosphatase (U/L)</div>
+                        <div class="paired-values">
+                            <div class="label-group">
+                                <label for="alkalinePhosphatase_previous">Previous Value</label>
+                                <input type="number" id="alkalinePhosphatase_previous" name="alkalinePhosphatase_previous" step="0.1" min="6.0" max="4464.0" value="78" form="qualityAssuranceForm">
+                            </div>
+                            <div class="label-group">
+                                <label for="alkalinePhosphatase_current">Current Value</label>
+                                <input type="number" id="alkalinePhosphatase_current" name="alkalinePhosphatase_current" step="0.1" min="6.0" max="4464.0" value="85" form="qualityAssuranceForm" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analyte-pair">
+                        <div class="analyte-name">Alanine Transaminase (U/L)</div>
+                        <div class="paired-values">
+                            <div class="label-group">
+                                <label for="alanineTransaminase_previous">Previous Value</label>
+                                <input type="number" id="alanineTransaminase_previous" name="alanineTransaminase_previous" step="0.1" min="5.0" max="8700.0" value="25" form="qualityAssuranceForm">
+                            </div>
+                            <div class="label-group">
+                                <label for="alanineTransaminase_current">Current Value</label>
+                                <input type="number" id="alanineTransaminase_current" name="alanineTransaminase_current" step="0.1" min="5.0" max="8700.0" value="28" form="qualityAssuranceForm" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analyte-pair">
+                        <div class="analyte-name">Total Bilirubin (μmol/L)</div>
+                        <div class="paired-values">
+                            <div class="label-group">
+                                <label for="totalBilirubin_previous">Previous Value</label>
+                                <input type="number" id="totalBilirubin_previous" name="totalBilirubin_previous" step="0.1" min="3.0" max="647.0" value="13" form="qualityAssuranceForm">
+                            </div>
+                            <div class="label-group">
+                                <label for="totalBilirubin_current">Current Value</label>
+                                <input type="number" id="totalBilirubin_current" name="totalBilirubin_current" step="0.1" min="3.0" max="647.0" value="15" form="qualityAssuranceForm" required>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Renal Function Tests -->
-                <div class="form-section">
-                    <h3>Renal Function Tests</h3>
-                    
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Sodium (mmol/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="sodium_previous">Previous Value</label>
-                                <input type="number" id="sodium_previous" name="sodium_previous" step="0.1" min="90.0" max="200.0" value="138">
-                            </div>
-                            <div class="label-group">
-                                <label for="sodium_current">Current Value</label>
-                                <input type="number" id="sodium_current" name="sodium_current" step="0.1" min="90.0" max="200.0" value="140" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Potassium (mmol/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="potassium_previous">Previous Value</label>
-                                <input type="number" id="potassium_previous" name="potassium_previous" step="0.1" min="1.5" max="10.0" value="4.0">
-                            </div>
-                            <div class="label-group">
-                                <label for="potassium_current">Current Value</label>
-                                <input type="number" id="potassium_current" name="potassium_current" step="0.1" min="1.5" max="10.0" value="4.2" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Creatinine (μmol/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="creatinine_previous">Previous Value</label>
-                                <input type="number" id="creatinine_previous" name="creatinine_previous" step="0.1" min="10.0" max="2980.0" value="88">
-                            </div>
-                            <div class="label-group">
-                                <label for="creatinine_current">Current Value</label>
-                                <input type="number" id="creatinine_current" name="creatinine_current" step="0.1" min="10.0" max="2980.0" value="95" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="analyte-pair">
-                        <div class="analyte-name">Urea (mmol/L)</div>
-                        <div class="paired-values">
-                            <div class="label-group">
-                                <label for="urea_previous">Previous Value</label>
-                                <input type="number" id="urea_previous" name="urea_previous" step="0.1" min="0.5" max="97.4" value="6.2">
-                            </div>
-                            <div class="label-group">
-                                <label for="urea_current">Current Value</label>
-                                <input type="number" id="urea_current" name="urea_current" step="0.1" min="0.5" max="97.4" value="6.8" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Buttons moved to column 2 -->
                 <div class="button-group">
-                    <button type="submit" class="btn">Analyze Laboratory Values</button>
+                    <button type="submit" class="btn" form="qualityAssuranceForm">Analyze Laboratory Values</button>
                     <button type="button" class="btn-clear" onclick="clearForm()">Clear All Fields</button>
                 </div>
-            </form>
-        </div>
-
-        <!-- Column 2: Liver Function Tests -->
-        <div class="column-2">
-            <h2>Liver Function Tests</h2>
-            
-            <div class="form-section">
-                <div class="analyte-pair">
-                    <div class="analyte-name">Total Protein (g/L)</div>
-                    <div class="paired-values">
-                        <div class="label-group">
-                            <label for="totalProtein_previous">Previous Value</label>
-                            <input type="number" id="totalProtein_previous" name="totalProtein_previous" step="0.1" min="12.0" max="132.0" value="68" form="qualityAssuranceForm">
-                        </div>
-                        <div class="label-group">
-                            <label for="totalProtein_current">Current Value</label>
-                            <input type="number" id="totalProtein_current" name="totalProtein_current" step="0.1" min="12.0" max="132.0" value="72" form="qualityAssuranceForm" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="analyte-pair">
-                    <div class="analyte-name">Albumin (g/L)</div>
-                    <div class="paired-values">
-                        <div class="label-group">
-                            <label for="albumin_previous">Previous Value</label>
-                            <input type="number" id="albumin_previous" name="albumin_previous" step="0.1" min="4.0" max="66.0" value="40" form="qualityAssuranceForm">
-                        </div>
-                        <div class="label-group">
-                            <label for="albumin_current">Current Value</label>
-                            <input type="number" id="albumin_current" name="albumin_current" step="0.1" min="4.0" max="66.0" value="42" form="qualityAssuranceForm" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="analyte-pair">
-                    <div class="analyte-name">Alkaline Phosphatase (U/L)</div>
-                    <div class="paired-values">
-                        <div class="label-group">
-                            <label for="alkalinePhosphatase_previous">Previous Value</label>
-                            <input type="number" id="alkalinePhosphatase_previous" name="alkalinePhosphatase_previous" step="0.1" min="6.0" max="4464.0" value="78" form="qualityAssuranceForm">
-                        </div>
-                        <div class="label-group">
-                            <label for="alkalinePhosphatase_current">Current Value</label>
-                            <input type="number" id="alkalinePhosphatase_current" name="alkalinePhosphatase_current" step="0.1" min="6.0" max="4464.0" value="85" form="qualityAssuranceForm" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="analyte-pair">
-                    <div class="analyte-name">Alanine Transaminase (U/L)</div>
-                    <div class="paired-values">
-                        <div class="label-group">
-                            <label for="alanineTransaminase_previous">Previous Value</label>
-                            <input type="number" id="alanineTransaminase_previous" name="alanineTransaminase_previous" step="0.1" min="5.0" max="8700.0" value="25" form="qualityAssuranceForm">
-                        </div>
-                        <div class="label-group">
-                            <label for="alanineTransaminase_current">Current Value</label>
-                            <input type="number" id="alanineTransaminase_current" name="alanineTransaminase_current" step="0.1" min="5.0" max="8700.0" value="28" form="qualityAssuranceForm" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="analyte-pair">
-                    <div class="analyte-name">Total Bilirubin (μmol/L)</div>
-                    <div class="paired-values">
-                        <div class="label-group">
-                            <label for="totalBilirubin_previous">Previous Value</label>
-                            <input type="number" id="totalBilirubin_previous" name="totalBilirubin_previous" step="0.1" min="3.0" max="647.0" value="13" form="qualityAssuranceForm">
-                        </div>
-                        <div class="label-group">
-                            <label for="totalBilirubin_current">Current Value</label>
-                            <input type="number" id="totalBilirubin_current" name="totalBilirubin_current" step="0.1" min="3.0" max="647.0" value="15" form="qualityAssuranceForm" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Column 3: Results Panel -->
-        <div class="column-3">
-            <h2>Quality Assurance Results</h2>
-            
-            <div class="loading" id="loadingIndicator">
-                <div class="spinner"></div>
-                <p>Analyzing laboratory values...</p>
             </div>
 
-            <div id="resultsContainer" style="display: none;">
-                <div class="results-header">
-                    <div>Analyte</div>
-                    <div>Previous</div>
-                    <div>Current</div>
-                    <div>Change</div>
-                    <div>True Value</div>
-                    <div>Error Risk</div>
-                </div>
+            <!-- Column 3: Results Panel -->
+            <div class="column-3">
+                <h2>Quality Assurance Results</h2>
                 
-                <div class="results-grid" id="resultsGrid">
-                    <!-- Results will be populated here -->
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <p>Analyzing laboratory values...</p>
                 </div>
 
-                <div class="interpretation-panel">
-                    <h3>Interpretation</h3>
-                    <div id="interpretationText">
-                        <!-- Interpretation will be populated here -->
+                <div id="resultsContainer" style="display: none;">
+                    <div class="results-header">
+                        <div>Analyte</div>
+                        <div>Previous</div>
+                        <div>Current</div>
+                        <div>Change</div>
+                        <div>True Value</div>
+                        <div>Error Risk</div>
+                    </div>
+                    
+                    <div class="results-grid" id="resultsGrid">
+                        <!-- Results will be populated here -->
+                    </div>
+
+                    <div class="interpretation-panel">
+                        <div id="interpretationText">
+                            <!-- Interpretation will be populated here -->
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="noResults" style="display: block; text-align: center; padding: 2rem; color: #718096;">
-                <p>Click "Analyze Laboratory Values" to see the demo results</p>
+                <div id="noResults" style="display: block; text-align: center; padding: 1rem; color: #718096; font-size: 0.8rem;">
+                    <p>Click "Analyze Laboratory Values" to see the demo results</p>
+                </div>
             </div>
         </div>
     </div>
-
-
 
     <script>
         // Clear form function for demo purposes
