@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 
 
-def detect_preanalytical_errors_html(result_data: Dict) -> str):
+def detect_preanalytical_errors_html(result_data: Dict) -> str:
     """
     Detect preanalytical errors and return results in HTML format
     Cut-off: error probability > 0.5
