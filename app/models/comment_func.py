@@ -233,29 +233,29 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
                 preanalytical_analytes.add('Dilution')
         
     # 7. Sample Concentration Error
-    proteins_increased = []
-    protein_analytes = [albumin, total_protein]
-    for protein in protein_analytes:
-        if protein and protein['currentValue'] > protein['trueValue'] * 1.1:
-            proteins_increased.append(protein['name'])
+    # proteins_increased = []
+    # protein_analytes = [albumin, total_protein]
+    # for protein in protein_analytes:
+    #     if protein and protein['currentValue'] > protein['trueValue'] * 1.3:
+    #         proteins_increased.append(protein['name'])
     
-    other_increased = []
-    check_analytes = [creatinine, urea, bilirubin]
-    for analyte in check_analytes:
-        if analyte and analyte['currentValue'] > analyte['trueValue'] * 1.1:
-            other_increased.append(analyte['name'])
+    # other_increased = []
+    # check_analytes = [creatinine, urea, bilirubin]
+    # for analyte in check_analytes:
+    #     if analyte and analyte['currentValue'] > analyte['trueValue'] * 1.3:
+    #         other_increased.append(analyte['name'])
     
-    if len(proteins_increased) >= 1 and len(other_increased) >= 2:
-        error_html = f"""
-        <h4>Sample Concentration Error</h4>
-        <p><strong>Finding:</strong> Multiple analytes proportionally increased: {', '.join(proteins_increased + other_increased)}</p>
+    # if len(proteins_increased) >= 1 and len(other_increased) >= 2:
+    #     error_html = f"""
+    #     <h4>Sample Concentration Error</h4>
+    #     <p><strong>Finding:</strong> Multiple analytes proportionally increased: {', '.join(proteins_increased + other_increased)}</p>
         
-        <p><strong>Additional Tests to Confirm:</strong></p>
-        <strong>Serum osmolality</strong> - Will be increased proportionally<br><strong>Visual inspection</strong> - Check for sample volume loss<br>
-        """
-        detected_errors.append(error_html)
-        for protein in proteins_increased:
-            preanalytical_analytes.add(protein)
+    #     <p><strong>Additional Tests to Confirm:</strong></p>
+    #     <strong>Serum osmolality</strong> - Will be increased proportionally<br><strong>Visual inspection</strong> - Check for sample volume loss<br>
+    #     """
+    #     detected_errors.append(error_html)
+    #     for protein in proteins_increased:
+    #         preanalytical_analytes.add(protein)
     
     # 8. Hemolysis Detection
     if potassium and potassium['errorProbability'] > 0.5:
@@ -385,7 +385,7 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
     if detected_errors:
         html_output += """
         <div class="alert-error">
-            <h2>Preanalytical Errors Detected</h2>
+            <h2>Potential Preanalytical Errors Detected</h2>
         """
         
         # Simply concatenate the error HTML strings without reparsing
