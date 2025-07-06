@@ -340,45 +340,57 @@ def detect_preanalytical_errors_html(result_data: Dict) -> str:
     
     html_output=""
 
+    # if detected_errors:
+    #     html_output += """
+    #     <div class="alert-error">
+    #         <h2>Preanalytical Errors Detected</h2>
+    #     """
+        
+    #     # Group errors by type for better organization
+    #     error_groups = {}
+    #     for error in detected_errors:
+    #         # Extract the main error type (first part before the colon or finding)
+    #         if "Potassium Contamination" in error:
+    #             if "Potassium Contamination" not in error_groups:
+    #                 error_groups["Potassium Contamination"] = []
+    #             error_groups["Potassium Contamination"].append(error)
+    #         elif "Hemolysis" in error:
+    #             if "Hemolysis" not in error_groups:
+    #                 error_groups["Hemolysis"] = []
+    #             error_groups["Hemolysis"].append(error)
+    #         else:
+    #             if "Other" not in error_groups:
+    #                 error_groups["Other"] = []
+    #             error_groups["Other"].append(error)
+        
+    #     for group_name, group_errors in error_groups.items():
+    #         html_output += f"""
+    #         <div class="error-item">
+    #             <div class="error-title">{group_name}</div>
+    #         """
+    #         for error in group_errors:
+    #             if "Finding:" in error:
+    #                 finding_part = error.split("Finding:")[1].strip()
+    #                 html_output += f'<div class="error-finding">Finding: {finding_part}</div>'
+    #             elif "Additional Tests" in error:
+    #                 html_output += f'<div class="error-finding">{error}</div>'
+    #                 # Add test items here if they exist
+    #             else:
+    #                 html_output += f'<div class="test-item">{error}</div>'
+            
+    #         html_output += "</div>"
+        
+    #     html_output += "</div>"
+
     if detected_errors:
         html_output += """
         <div class="alert-error">
             <h2>Preanalytical Errors Detected</h2>
         """
         
-        # Group errors by type for better organization
-        error_groups = {}
+        # Simply concatenate the error HTML strings without reparsing
         for error in detected_errors:
-            # Extract the main error type (first part before the colon or finding)
-            if "Potassium Contamination" in error:
-                if "Potassium Contamination" not in error_groups:
-                    error_groups["Potassium Contamination"] = []
-                error_groups["Potassium Contamination"].append(error)
-            elif "Hemolysis" in error:
-                if "Hemolysis" not in error_groups:
-                    error_groups["Hemolysis"] = []
-                error_groups["Hemolysis"].append(error)
-            else:
-                if "Other" not in error_groups:
-                    error_groups["Other"] = []
-                error_groups["Other"].append(error)
-        
-        for group_name, group_errors in error_groups.items():
-            html_output += f"""
-            <div class="error-item">
-                <div class="error-title">{group_name}</div>
-            """
-            for error in group_errors:
-                if "Finding:" in error:
-                    finding_part = error.split("Finding:")[1].strip()
-                    html_output += f'<div class="error-finding">Finding: {finding_part}</div>'
-                elif "Additional Tests" in error:
-                    html_output += f'<div class="error-finding">{error}</div>'
-                    # Add test items here if they exist
-                else:
-                    html_output += f'<div class="test-item">{error}</div>'
-            
-            html_output += "</div>"
+            html_output += f'<div class="error-item">{error}</div>'
         
         html_output += "</div>"
 
